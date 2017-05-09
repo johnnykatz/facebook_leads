@@ -65,6 +65,58 @@ Route::post('password/reset', 'Auth\PasswordController@postReset');
 
 Route::get('/home', 'HomeController@index');
 
+
+
+
+
 Route::get('prueba', 'API\pruebas@prueba');
 Route::get('fb_login', 'API\pruebas@fb_login');
-Route::get('callback', 'API\pruebas@callback');
+Route::get('perfil', 'API\pruebas@perfil');
+Route::get('formularios', 'API\pruebas@formularios');
+Route::get('crear_estructura', 'API\pruebas@crearEstructura');
+Route::get('sincronizar', 'API\pruebas@sincronizar');
+
+
+Route::get('callback', 'Admin\FacebookController@callback');
+
+
+
+
+
+Route::get('admin/tokens', ['as'=> 'admin.tokens.index', 'uses' => 'Admin\TokenController@index']);
+Route::post('admin/tokens', ['as'=> 'admin.tokens.store', 'uses' => 'Admin\TokenController@store']);
+Route::get('admin/tokens/create', ['as'=> 'admin.tokens.create', 'uses' => 'Admin\TokenController@create']);
+Route::put('admin/tokens/{tokens}', ['as'=> 'admin.tokens.update', 'uses' => 'Admin\TokenController@update']);
+Route::patch('admin/tokens/{tokens}', ['as'=> 'admin.tokens.update', 'uses' => 'Admin\TokenController@update']);
+Route::delete('admin/tokens/{tokens}', ['as'=> 'admin.tokens.destroy', 'uses' => 'Admin\TokenController@destroy']);
+Route::get('admin/tokens/{tokens}', ['as'=> 'admin.tokens.show', 'uses' => 'Admin\TokenController@show']);
+Route::get('admin/tokens/{tokens}/edit', ['as'=> 'admin.tokens.edit', 'uses' => 'Admin\TokenController@edit']);
+
+
+Route::get('admin/formularios', ['as'=> 'admin.formularios.index', 'uses' => 'Admin\FormularioController@index']);
+Route::post('admin/formularios', ['as'=> 'admin.formularios.store', 'uses' => 'Admin\FormularioController@store']);
+Route::get('admin/formularios/create', ['as'=> 'admin.formularios.create', 'uses' => 'Admin\FormularioController@create']);
+Route::put('admin/formularios/{formularios}', ['as'=> 'admin.formularios.update', 'uses' => 'Admin\FormularioController@update']);
+Route::patch('admin/formularios/{formularios}', ['as'=> 'admin.formularios.update', 'uses' => 'Admin\FormularioController@update']);
+Route::delete('admin/formularios/{formularios}', ['as'=> 'admin.formularios.destroy', 'uses' => 'Admin\FormularioController@destroy']);
+Route::get('admin/formularios/{formularios}', ['as'=> 'admin.formularios.show', 'uses' => 'Admin\FormularioController@show']);
+Route::get('admin/formularios/{formularios}/edit', ['as'=> 'admin.formularios.edit', 'uses' => 'Admin\FormularioController@edit']);
+Route::get('admin/formularios/{formularios}/crear_estructura', ['as'=> 'admin.formularios.crear_estructura', 'uses' => 'Admin\FormularioController@crearEstructura']);
+
+
+Route::get('admin/formularios/{formularios}/listar_datos', ['as'=> 'admin.formularios.listar_datos', 'uses' => 'Admin\FormularioController@listarDatos']);
+
+
+
+
+Route::get('admin/users/editPassword', ['as' => 'admin.users.editPassword', 'uses' => 'Admin\UserController@editPassword', 'middleware' => ['auth']]);
+Route::post('admin/users/updatePassword', ['as' => 'admin.users.updatePassword', 'uses' => 'Admin\UserController@updatePassword', 'middleware' => ['auth']]);
+
+Route::get('admin/users', ['as' => 'admin.users.index', 'uses' => 'Admin\UserController@index', 'middleware' => ['auth']]);
+Route::post('admin/users', ['as' => 'admin.users.store', 'uses' => 'Admin\UserController@store', 'middleware' => ['auth']]);
+Route::get('admin/users/create', ['as' => 'admin.users.create', 'uses' => 'Admin\UserController@create', 'middleware' => ['auth']]);
+Route::put('admin/users/{users}', ['as' => 'admin.users.update', 'uses' => 'Admin\UserController@update', 'middleware' => ['auth']]);
+Route::patch('admin/users/{users}', ['as' => 'admin.users.update', 'uses' => 'Admin\UserController@update', 'middleware' => ['auth']]);
+Route::delete('admin/users/{users}', ['as' => 'admin.users.destroy', 'uses' => 'Admin\UserController@destroy', 'middleware' => ['auth']]);
+Route::get('admin/users/{users}', ['as' => 'admin.users.show', 'uses' => 'Admin\UserController@show', 'middleware' => ['auth']]);
+Route::get('admin/users/{users}/edit', ['as' => 'admin.users.edit', 'uses' => 'Admin\UserController@edit', 'middleware' => ['auth']]);

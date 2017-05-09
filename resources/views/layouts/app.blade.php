@@ -2,7 +2,7 @@
 <html>
 <head>
     <meta charset="UTF-8">
-    <title>TiendApp</title>
+    <title>Mass Digital</title>
     <meta content='width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no' name='viewport'>
 
     <link rel="stylesheet" href="{!! asset("plugin/AdminLTE/bootstrap/css/bootstrap.min.css") !!}">
@@ -68,18 +68,18 @@
 </head>
 
 
-<body class="skin-blue sidebar-mini">
+<body class="skin-red sidebar-mini">
 @if (!Auth::guest())
     <div class="wrapper">
         <!-- Main Header -->
         <header class="main-header">
 
-            <!-- Logo -->
-            <a href="#" class="logo">
-                {{--<b>TiendApp</b>--}}
-                <img src="{{asset('img-sistema/logo-tiendapp.svg')}}" style="max-height: 92px; padding: 5px 0 5px 0;">
+            <a href="{{ url('home') }}" class="logo">
+                <!-- mini logo for sidebar mini 50x50 pixels -->
+                <span class="logo-mini"><b>M</b>D</span>
+                <!-- logo for regular state and mobile devices -->
+                <span class="logo-lg"><b>Mass</b> Digital</span>
             </a>
-
             <!-- Header Navbar -->
             <nav class="navbar navbar-static-top" role="navigation">
                 <!-- Sidebar toggle button-->
@@ -94,7 +94,7 @@
                             <!-- Menu Toggle Button -->
                             <a href="#" class="dropdown-toggle" data-toggle="dropdown">
                                 <!-- The user image in the navbar-->
-                                <img src="{{asset('img-sistema/logo-peque.png')}}"
+                                <img src="{{asset('img-sistema/logo_user.png')}}"
                                      class="user-image" alt="User Image"/>
                                 <!-- hidden-xs hides the username on small devices so only the image appears. -->
                                 <span class="hidden-xs">
@@ -108,8 +108,8 @@
                             <ul class="dropdown-menu">
                                 <!-- The user image in the menu -->
                                 <li class="user-header">
-                                    <img src="{{asset('img-sistema/logo-peque.png')}}"
-                                         class="img-circle" alt="User Image"/>
+                                    <img src="{{asset('img-sistema/logo_user.png')}}"
+                                         class="user-image" alt="User Image"/>
                                     <p>
                                         @if (Auth::guest())
                                             InfyOm
@@ -146,7 +146,7 @@
 
         <!-- Main Footer -->
         <footer class="main-footer" style="max-height: 100px;text-align: center">
-            <strong>Copyright © 2016 <a href="#">TiendApp</a>.</strong> All rights reserved.
+            <strong>Copyright © 2016 <a href="#">Mass Digital</a>.</strong> All rights reserved.
         </footer>
 
     </div>
@@ -200,13 +200,13 @@
 @endif
 
 </body>
-<style>
-    .navbar-static-top {
-        height: 50px;
-    }
+{{--<style>--}}
+    {{--.navbar-static-top {--}}
+        {{--height: 50px;--}}
+    {{--}--}}
 
-    .logo {
-        height: 100px !important;
-    }
-</style>
+    {{--.logo {--}}
+        {{--height: 100px !important;--}}
+    {{--}--}}
+{{--</style>--}}
 </html>

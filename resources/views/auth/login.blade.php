@@ -3,7 +3,7 @@
 <head>
     <meta charset="utf-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
-    <meta name="csrf-token" content="{{ csrf_token() }}" />
+    <meta name="csrf-token" content="{{ csrf_token() }}"/>
     <title>TiendApp</title>
 
     <!-- Tell the browser to be responsive to screen width -->
@@ -39,11 +39,15 @@
     </div>
 
     <!-- /.login-logo -->
-    <div class="login-box-body" style=" background: rgba(0, 0, 0, 0) radial-gradient(ellipse at center center , #5170ad 0%, #355493 100%) repeat scroll 0 0;">
+    <div class="login-box-body"
+         style=" background: rgb(221, 75, 57)
+;radial-gradient(ellipse at center center , #5170ad 0%, #355493 100%) repeat scroll 0 0;">
         {{--<p class="login-box-msg">Inicio de sesion</p>--}}
-        <div align="center">
-            <img src="{{asset('img-sistema/logo-tiendapp.svg')}}" style="max-height: 150px; padding: 5px 0 5px 0;">
-        </div>
+
+                <div align="center">
+                   {{--<h1>Mass Digital</h1>--}}
+                    <img src="{{asset('img-sistema/logo-peque-blanco.png')}}" style="max-height: 100px; padding: 5px 0 5px 0;">
+                </div>
 
         <form method="post" action="{{ url('/login') }}">
             {!! csrf_field() !!}
@@ -72,7 +76,7 @@
                 <div class="col-xs-8">
                     <div class="checkbox icheck">
                         {{--<label>--}}
-                            {{--<input type="checkbox" name="remember"> Remember Me--}}
+                        {{--<input type="checkbox" name="remember"> Remember Me--}}
                         {{--</label>--}}
                     </div>
                 </div>

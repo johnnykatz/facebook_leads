@@ -4,8 +4,6 @@
         <th>Id</th>
         <th>Nombre</th>
         <th>Email</th>
-        <th>Roles</th>
-        <th>Compañia</th>
         <th colspan="3">Acciones</th>
         </thead>
         <tbody>
@@ -14,11 +12,6 @@
                 <td>{!! $user->id !!}</td>
                 <td>{!! $user->name !!}</td>
                 <td>{!! $user->email !!}</td>
-                <td>
-                    @foreach($user->roles as $role)
-                        {{$role->name}}|
-                    @endforeach</td>
-                <td>{!! $user->compania !!}</td>
                 <td>
 
                     {!! Form::open(['route' => ['admin.users.destroy', $user->id], 'method' => 'delete']) !!}

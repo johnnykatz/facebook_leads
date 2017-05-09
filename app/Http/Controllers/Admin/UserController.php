@@ -40,32 +40,14 @@ class UserController extends AppBaseController
     {
 
         $users = DB::table('users')
-            ->leftJoin('clientes AS c', 'c.user_id', '=', 'users.id')
-            ->leftJoin('vendedores AS v', 'v.user_id', '=', 'users.id')
-            ->leftJoin('distribuidores AS d', 'users.distribuidor_id', '=', 'd.id')
-            ->leftJoin('companias AS com', 'com.id', '=', 'users.compania_id');
 
-        if ($request['nombre'] != '') {
-            $users->where('users.name', 'LIKE', "%" . $request['nombre'] . "%");
-        }
-        $users->whereNull('c.user_id');
-        $users->whereNull('v.user_id');
-//        $users->where('users.name', '!=', '');
-        $users->select('users.*', 'com.nombre as compania');
+       ->select('users.*');
 
         $users = $users->paginate(15);
 //        dd(DB::getQueryLog());
-        for ($i = 0; $i < count($users); $i++) {
-            $roles = DB::table('role_user')
-                ->join('roles', 'role_user.role_id', '=', 'roles.id')
-                ->where('user_id', '=', $users[$i]->id)
-                ->select('roles.*');
-            $users[$i]->roles = $roles->get();
-        }
-        $ciudades = Ciudad::orderBy('nombre', 'ASC')->lists('nombre', 'id');
+
 
         return view('admin.users.index')
-            ->with('ciudades', $ciudades)
             ->with('users', $users)
             ->with('filtro', $request->all());
     }

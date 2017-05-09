@@ -6,8 +6,9 @@
         <!-- Sidebar user panel (optional) -->
         <div class="user-panel">
             <div class="pull-left image">
-                <img src="" class="img-circle"
+                <img src="{{asset('img-sistema/logo_user.png')}}"class="img-circle"
                      alt="User Image"/>
+
             </div>
             <div class="pull-left info">
                 @if (Auth::guest())
@@ -33,19 +34,8 @@
     <!-- Sidebar Menu -->
 
         <ul class="sidebar-menu">
-            @role("tiendapp")
-            @include('layouts.menu-tiendapp')
-            @endrole
-            @role("compania")
-            @include('layouts.menu-compania')
-            @endrole
-            @role("call-center")
-            @include('layouts.menu-call-center')
-            @endrole
-            @role("distribuidor")
-            @include('layouts.menu-distribuidor')
-            @endrole
 
+            @include('layouts.menu')
         </ul>
         <!-- /.sidebar-menu -->
     </section>

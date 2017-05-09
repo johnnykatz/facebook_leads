@@ -8,6 +8,7 @@ use App\Models\Admin\Token;
 
 use FacebookAds\Object\Page;
 use FacebookAds\Object\LeadgenForm;
+use Illuminate\Support\Facades\DB;
 
 class FacebookProvider
 {

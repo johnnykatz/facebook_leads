@@ -8,14 +8,13 @@ use App\Models\Admin\Token;
 
 use FacebookAds\Object\Page;
 use FacebookAds\Object\LeadgenForm;
-use Illuminate\Support\Facades\DB;
 
 class FacebookProvider
 {
     public static function conexionFacebook()
     {
         $token = Token::first();
-        $prueba=Api::init(env('APP_ID'), env('APP_SECRET'), $token->token);
+        Api::init(env('APP_ID'), env('APP_SECRET'), $token->token);
     }
 
     public static function fb_login()
@@ -34,7 +33,8 @@ class FacebookProvider
 
         $permissions = ['manage_pages', 'publish_pages']; // Optional permissions
 //        manage_pages y publish_pages
-        $loginUrl = $helper->getLoginUrl('http://localhost:8888/mass-digital/public/callback', $permissions);
+        $loginUrl = $helper->getLoginUrl(url('callback'), $permissions);
+//        $loginUrl = $helper->getLoginUrl('http://localhost:8888/mass-digital/public/callback', $permissions);
 //        $loginUrl = $helper->getLoginUrl(route('callback', [$permissions]));
 
         return htmlspecialchars($loginUrl);

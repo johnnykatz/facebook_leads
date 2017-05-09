@@ -25,7 +25,7 @@
         "artisaninweb/laravel-soap": "0.2.*",
         "ktamas77/firebase-php": "dev-master",
         "facebook/php-sdk-v4" : "~5.0",
-        
+
         "facebook/php-ads-sdk": "2.8.*"
 
 

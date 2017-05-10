@@ -3,8 +3,8 @@
         <thead>
         <th>Token</th>
         <th>Expires At</th>
-        <th>Page Id</th>
-        <th>Page Name</th>
+        {{--<th>Page Id</th>--}}
+        {{--<th>Page Name</th>--}}
         {{--<th colspan="3">Action</th>--}}
         </thead>
         <tbody>
@@ -12,8 +12,8 @@
             <tr>
                 <td>{!! $token->token !!}</td>
                 <td>{!! $token->expires_at !!}</td>
-                <td>{!! $token->page_id !!}</td>
-                <td>{!! $token->page_name !!}</td>
+                {{--<td>{!! $token->page_id !!}</td>--}}
+                {{--<td>{!! $token->page_name !!}</td>--}}
                 {{--<td>--}}
                     {{--{!! Form::open(['route' => ['admin.tokens.destroy', $token->id], 'method' => 'delete']) !!}--}}
                     {{--<div class='btn-group'>--}}

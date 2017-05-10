@@ -15,7 +15,8 @@ class Kernel extends ConsoleKernel
     protected $commands = [
 
         Commands\pruebas::class,
-        Commands\SincronizarLeds::class,
+        Commands\SincronizarLeads::class,
+        Commands\SincronizarEstructura::class,
 
         // Commands\Inspire::class,
     ];

@@ -9,6 +9,7 @@ use App\Models\Admin\Token;
 use FacebookAds\Object\Page;
 use FacebookAds\Object\LeadgenForm;
 use Illuminate\Support\Facades\DB;
+use Illuminate\Database\Schema\Blueprint;
 
 class FacebookProvider
 {
@@ -130,9 +131,9 @@ class FacebookProvider
     }
 
 
-   public function sincronizarLeads()
+    public function sincronizarLeads()
     {
-        echo " Comienza sincronizacion". chr(10) . chr(13);;
+        echo " Comienza sincronizacion" . chr(10) . chr(13);;
         $this::conexionFacebook();
         $formularios = Formulario::where('activo', true)->where('con_estructura', true)->get();
         foreach ($formularios as $formulario) {
@@ -208,10 +209,52 @@ class FacebookProvider
             $formulario->save();
 
         }
-        echo " Termina sincronizacion". chr(10) . chr(13);;
+        echo " Termina sincronizacion" . chr(10) . chr(13);;
 
 
     }
 
+
+    public function sincronizarEstructura()
+    {
+
+        FacebookProvider::conexionFacebook();
+
+        $formularios = Formulario::where('activo', true)->where('con_estructura', false)->get();
+        foreach ($formularios as $formulario) {
+            $form = new LeadgenForm($formulario->form_id);
+            $fields = $form->getFields();
+            $leads = $form->getLeads();
+
+            foreach ($leads as $lead) {
+                $data = $lead->getData();
+                $fields = $data['field_data'];
+                break;
+            }
+
+            try {
+                \Illuminate\Support\Facades\Schema::create('form_' . $formulario->form_id, function (Blueprint $table) use ($fields) {
+                    $table->increments('id');
+                    $table->string('lead_id');
+                    $table->dateTime('created_time');
+                    $table->string('formulario_id');
+
+                    foreach ($fields as $field) {
+                        $table->string(FuncionesProvider::limpiaCadena($field['name']));
+                    }
+                    $table->timestamps();
+                });
+            } catch (\Illuminate\Database\QueryException $e) {
+                echo implode(',', $e->errorInfo);
+            }
+            $datosForm = $form->read();
+
+            $formulario->db_name = 'form_' . $formulario->form_id;
+            $formulario->con_estructura = true;
+            $formulario->nombre = $datosForm->name;
+            $formulario->save();
+        }
+
+    }
 
 }

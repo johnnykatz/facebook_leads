@@ -7,7 +7,7 @@ class FuncionesProvider
 {
     public static function  limpiaCadena($cadena)
     {
-        $charset='ISO-8859-1'; // o 'UTF-8' o ISO-8859-1
+        $charset='UTF-8'; // o 'UTF-8' o ISO-8859-1
         $cadena=  iconv($charset, 'ASCII//TRANSLIT', $cadena);
 
         return  preg_replace("/[^A-Za-z0-9 ]/", '', $cadena);

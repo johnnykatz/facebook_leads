@@ -18,14 +18,14 @@ use App\Providers\FacebookProvider;
 use Illuminate\Console\Command;
 use Illuminate\Support\Facades\DB;
 
-class SincronizarLeds extends Command
+class SincronizarLeads extends Command
 {
     /**
      * The name and signature of the console command.
      *
      * @var string
      */
-    protected $signature = 'SincronizarLeds';
+    protected $signature = 'SincronizarLeads';
 
     /**
      * The console command description.

@@ -132,6 +132,7 @@ class FacebookProvider
 
    public function sincronizarLeads()
     {
+        echo " Comienza sincronizacion". chr(10) . chr(13);;
         $this::conexionFacebook();
         $formularios = Formulario::where('activo', true)->where('con_estructura', true)->get();
         foreach ($formularios as $formulario) {
@@ -187,7 +188,7 @@ class FacebookProvider
 
                 foreach ($data['field_data'] as $field) {
                     $fields[] = FuncionesProvider::limpiaCadena($field['name']);
-                    $values[] = (string)$field['values'][0];
+                    $values[] = FuncionesProvider::limpiaCadena((string)$field['values'][0]);
                 }
                 $valores = "'" . implode("','", $values) . "'";
 
@@ -207,6 +208,8 @@ class FacebookProvider
             $formulario->save();
 
         }
+        echo " Termina sincronizacion". chr(10) . chr(13);;
+
 
     }
 

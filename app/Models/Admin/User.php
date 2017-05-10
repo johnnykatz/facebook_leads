@@ -17,8 +17,6 @@ class User extends Model
     public $fillable = [
         'name',
         'email',
-        'compania_id',
-        'distribuidor_id',
         'login',
         'password',
         'password_cuenta_corriente',
@@ -32,9 +30,6 @@ class User extends Model
     protected $casts = [
         'name' => 'string',
         'email' => 'string',
-        'login' => 'string',
-        'compania_id' => 'integer',
-        'distribuidor_id' => 'integer',
         'password' => 'string',
         'password_cuenta_corriente' => 'string',
     ];
@@ -47,7 +42,6 @@ class User extends Model
     public static $rules = [
         'name' => 'required',
         'email' => 'email|max:255|unique:users',
-        'login' => 'max:255|unique:users',
     ];
 
     protected $hidden = [

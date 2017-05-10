@@ -6,10 +6,12 @@ use App\Models\Admin\Formulario;
 use FacebookAds\Api;
 use App\Models\Admin\Token;
 
+use FacebookAds\Object\Lead;
 use FacebookAds\Object\Page;
 use FacebookAds\Object\LeadgenForm;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Database\Schema\Blueprint;
+use FacebookAds\Cursor;
 
 class FacebookProvider
 {
@@ -133,11 +135,15 @@ class FacebookProvider
 
     public function sincronizarLeads()
     {
+        Cursor::setDefaultUseImplicitFetch(true);
+
         echo " Comienza sincronizacion" . chr(10) . chr(13);;
         $this::conexionFacebook();
         $formularios = Formulario::where('activo', true)->where('con_estructura', true)->get();
         foreach ($formularios as $formulario) {
             $inicio = true;
+//            Cursor::setDefaultUseImplicitFetch(true);
+//            Lead::setDefaultReadFields();
             $form = new LeadgenForm($formulario->form_id);
             if ($formulario->fecha_ultimo_lead != null) {
                 $leads = $form->getLeads();
@@ -156,58 +162,60 @@ class FacebookProvider
             } else {
                 $leads = $form->getLeads();
             }
+            if ($leads) {
+                foreach ($leads as $lead) {
+                    $data = $lead->getData();
 
-            foreach ($leads as $lead) {
-                $data = $lead->getData();
+                    $lead_tmp = DB::table($formulario->db_name)
+                        ->select('id')
+                        ->where('lead_id', $data['id'])
+                        ->first();
+                    if ($lead_tmp) {
+                        continue;
+                    }
+                    $fields = array();
+                    $values = array();
 
-                $lead_tmp = DB::table($formulario->db_name)
-                    ->select('id')
-                    ->where('lead_id', $data['id'])
-                    ->first();
-                if ($lead_tmp) {
-                    continue;
+
+                    $fields[] = 'lead_id';
+                    $values[] = $data['id'];
+
+                    $fields[] = 'created_at';
+                    $values[] = date("Y-m-d H:i:s");
+
+                    $fields[] = 'updated_at';
+                    $values[] = date("Y-m-d H:i:s");
+
+                    $fields[] = 'created_time';
+                    $values[] = $data['created_time'];
+
+                    $fields[] = 'formulario_id';
+                    $values[] = $formulario->id;
+
+
+                    foreach ($data['field_data'] as $field) {
+                        $fields[] = FuncionesProvider::limpiaCadena($field['name']);
+//                    $values[] = FuncionesProvider::limpiaCadenaDato((string)$field['values'][0]);
+                        $values[] = (string)$field['values'][0];
+                    }
+                    $valores = "'" . implode("','", $values) . "'";
+
+
+                    $sql = DB::insert("insert into " . $formulario->db_name . " (" . implode(',', $fields) . ")" . " values (" . $valores . ")");
+                    if ($inicio == true) {
+                        $formulario->fecha_ultimo_lead = $lead->created_time;
+                        $formulario->save();
+                        $inicio = false;
+                    }
                 }
-                $fields = array();
-                $values = array();
 
-
-                $fields[] = 'lead_id';
-                $values[] = $data['id'];
-
-                $fields[] = 'created_at';
-                $values[] = date("Y-m-d H:i:s");
-
-                $fields[] = 'updated_at';
-                $values[] = date("Y-m-d H:i:s");
-
-                $fields[] = 'created_time';
-                $values[] = $data['created_time'];
-
-                $fields[] = 'formulario_id';
-                $values[] = $formulario->id;
-
-
-                foreach ($data['field_data'] as $field) {
-                    $fields[] = FuncionesProvider::limpiaCadena($field['name']);
-                    $values[] = FuncionesProvider::limpiaCadena((string)$field['values'][0]);
-                }
-                $valores = "'" . implode("','", $values) . "'";
-
-
-                $sql = DB::insert("insert into " . $formulario->db_name . " (" . implode(',', $fields) . ")" . " values (" . $valores . ")");
-                if ($inicio == true) {
+                $formulario->fecha_sincronizacion = date("Y-m-d H:i:s");
+                if ($inicio == false) {
                     $formulario->fecha_ultimo_lead = $lead->created_time;
-                    $formulario->save();
-                    $inicio = false;
                 }
-            }
+                $formulario->save();
 
-            $formulario->fecha_sincronizacion = date("Y-m-d H:i:s");
-            if ($inicio == false) {
-                $formulario->fecha_ultimo_lead = $lead->created_time;
             }
-            $formulario->save();
-
         }
         echo " Termina sincronizacion" . chr(10) . chr(13);;
 

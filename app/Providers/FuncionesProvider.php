@@ -14,4 +14,10 @@ class FuncionesProvider
         return (preg_replace('[^ A-Za-z0-9_-ñÑ]', '', $cadena));
     }
 
+    public static function  limpiaCadenaDato($cadena)
+    {
+        return  preg_replace("/[^A-Za-z0-9 ]/", '', $cadena);
+        return (preg_replace('[^ A-Za-z0-9_-ñÑ]', '', $cadena));
+    }
+
 }

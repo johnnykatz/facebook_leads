@@ -234,81 +234,8 @@ class pruebas extends Controller
 
     function sincronizar()
     {
-        FacebookProvider::conexionFacebook();
-        $formularios = Formulario::where('activo', true)->where('con_estructura', true)->get();
-        foreach ($formularios as $formulario) {
-            $inicio = true;
-            $form = new LeadgenForm($formulario->form_id);
-            if ($formulario->fecha_ultimo_lead != null) {
-                $leads = $form->getLeads();
-
-//                $time_from = (new \DateTime($formulario->fecha_ultimo_lead))->getTimestamp();
-//                $leads = $form->getLeads(array(), array(
-//                    AdReportRunFields::FILTERING => array(
-//                        array(
-//                            'field' => 'time_created',
-//                            'operator' => 'GREATER_THAN',
-//                            'value' => $time_from,
-//                        ),
-//                    ),
-//
-//                ));
-            } else {
-                $leads = $form->getLeads();
-            }
-
-            foreach ($leads as $lead) {
-                $data = $lead->getData();
-
-                $lead_tmp = DB::table($formulario->db_name)
-                    ->select('id')
-                    ->where('lead_id', $data['id'])
-                    ->first();
-                if ($lead_tmp) {
-                    continue;
-                }
-                $fields = array();
-                $values = array();
-
-
-                $fields[] = 'lead_id';
-                $values[] = $data['id'];
-
-                $fields[] = 'created_at';
-                $values[] = date("Y-m-d H:i:s");
-
-                $fields[] = 'updated_at';
-                $values[] = date("Y-m-d H:i:s");
-
-                $fields[] = 'created_time';
-                $values[] = $data['created_time'];
-
-                $fields[] = 'formulario_id';
-                $values[] = $formulario->id;
-
-
-                foreach ($data['field_data'] as $field) {
-                    $fields[] = FuncionesProvider::limpiaCadena($field['name']);
-                    $values[] = (string)$field['values'][0];
-                }
-                $valores = "'" . implode("','", $values) . "'";
-
-
-                $sql = DB::insert("insert into " . $formulario->db_name . " (" . implode(',', $fields) . ")" . " values (" . $valores . ")");
-                if ($inicio == true) {
-                    $formulario->fecha_ultimo_lead = $lead->created_time;
-                    $formulario->save();
-                    $inicio = false;
-                }
-            }
-
-            $formulario->fecha_sincronizacion = date("Y-m-d H:i:s");
-            if ($inicio == false) {
-                $formulario->fecha_ultimo_lead = $lead->created_time;
-            }
-            $formulario->save();
-
-        }
+        $facebook = new FacebookProvider();
+        $facebook->sincronizarLeads();
 
     }
 

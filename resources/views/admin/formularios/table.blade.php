@@ -37,9 +37,9 @@
                                     class="glyphicon glyphicon-eye-open"></i></a>
                         <a href="{!! route('admin.formularios.edit', [$formulario->id]) !!}" class='btn btn-default'><i
                                     class="glyphicon glyphicon-edit"></i></a>
-                        <a href="{!! route('admin.formularios.crear_estructura', [$formulario->id]) !!}"
-                           class='btn btn-default' title="Crear estructura"><i
-                                    class="glyphicon glyphicon-cog"></i></a>
+                        {{--<a href="{!! route('admin.formularios.crear_estructura', [$formulario->id]) !!}"--}}
+                           {{--class='btn btn-default' title="Crear estructura"><i--}}
+                                    {{--class="glyphicon glyphicon-cog"></i></a>--}}
 
                         <a href="{!! route('admin.formularios.listar_datos', [$formulario->id]) !!}" class='btn btn-default' title="Mostrar Leds"><i
                                     class="glyphicon glyphicon-list" ></i></a>

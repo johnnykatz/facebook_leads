@@ -38,7 +38,10 @@ class SincronizarCrm extends Command
      */
     public function handle()
     {
+        echo " Comienza sincronizacion de CRM" . chr(10) . chr(13);;
         $servicio = new CrmService($this->argument('servicio'));
         $servicio->enviarDatos();
+        echo " Finaliza sincronizacion de CRM" . chr(10) . chr(13);;
+
     }
 }

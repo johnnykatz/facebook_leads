@@ -74,7 +74,7 @@ class CrmService
 
 //            exit;
             foreach ($datosFormulario as $dato) {
-                $datosAEnviar = null;
+                $datosAEnviar = "&formulario" . "=" . $formulario->nombre;
                 $dato = (array)$dato;
                 foreach ($estructura as $key => $campo) {
                     $kei = key($estructura);

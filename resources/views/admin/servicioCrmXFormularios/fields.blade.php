@@ -10,10 +10,16 @@
 
 <!-- Estado Field -->
 {{--<div class="form-group col-sm-6">--}}
-    {{--{!! Form::label('estado', 'Estado:') !!}--}}
-    {{--    {!! Form::text('estado', null, ['class' => 'form-control']) !!}--}}
+{{--{!! Form::label('estado', 'Estado:') !!}--}}
+{{--    {!! Form::text('estado', null, ['class' => 'form-control']) !!}--}}
 {{--</div>--}}
 
+
+<div class="form-group col-sm-6">
+    {!! Form::label('APELLIDO_CLIENTE', 'APELLIDO_CLIENTE:') !!}
+    {!! Form::select('APELLIDO_CLIENTE',$campos,null,['class'=>'form-control','placeholder'=>'seleccione...']) !!}
+
+</div>
 
 <div class="form-group col-sm-6">
     {!! Form::label('NOMBRE_CLIENTE', 'NOMBRE_CLIENTE:') !!}
@@ -36,6 +42,13 @@
 <div class="form-group col-sm-6">
     {!! Form::label('IDENTIFICACION_CLIENTE', 'IDENTIFICACION_CLIENTE:') !!}
     {!! Form::select('IDENTIFICACION_CLIENTE',$campos,null,['class'=>'form-control','placeholder'=>'seleccione...']) !!}
+
+</div>
+
+<div class="form-group col-sm-12">
+
+    {!! Form::label('eliminar', 'Eliminar sincronizacion:') !!}
+    {!! Form::checkbox('eliminar')!!}
 
 </div>
 

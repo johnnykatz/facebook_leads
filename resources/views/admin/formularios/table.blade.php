@@ -50,6 +50,10 @@
                             <a href="{!! route('admin.servicioCrmXFormularios.create', [$formulario->id]) !!}"
                                class='btn btn-default' title="Configurar Sincronizacion"><i
                                         class="glyphicon glyphicon-cloud"></i></a>
+                        @else
+                            <a href="{!! route('admin.servicioCrmXFormularios.create', [$formulario->id]) !!}"
+                               class='btn btn-success' title="Configurar Sincronizacion"><i
+                                        class="glyphicon glyphicon-cloud"></i></a>
                         @endif
 
                         {{--                    {!! Form::button('<i class="glyphicon glyphicon-trash"></i>', ['type' => 'submit', 'class' => 'btn btn-danger btn-xs', 'onclick' => "return confirm('Are you sure?')"]) !!}--}}

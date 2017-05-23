@@ -9,6 +9,7 @@ use App\Models\Admin\AsociacionCamposServicios;
 use App\Models\Admin\CampoServicioCrm;
 use App\Models\Admin\Formulario;
 use App\Models\Admin\ServicioCrm;
+use App\Models\Admin\ServicioCrmXFormulario;
 use App\Repositories\Admin\ServicioCrmXFormularioRepository;
 use App\Http\Controllers\AppBaseController as InfyOmBaseController;
 use Illuminate\Http\Request;
@@ -73,28 +74,51 @@ class ServicioCrmXFormularioController extends InfyOmBaseController
      */
     public function store(CreateServicioCrmXFormularioRequest $request)
     {
+        $camposDelete = DB::table('asociaciones_campos_servicios as a')
+            ->join('campos_servicios_crms as c', 'c.id', '=', 'a.campo_servicio_crm_id')
+            ->where('formulario_id', $request['formulario_id'])
+            ->where('c.servicio_crm_id', $request['servicio_crm_id'])
+            ->select('a.id')
+            ->get();
 
-        $request['estado'] = true;
-        $input = $request->all();
-
-        $servicioCrmXFormulario = $this->servicioCrmXFormularioRepository->create($input);
-
-        $campos = CampoServicioCrm::where('servicio_crm_id', $request['servicio_crm_id'])->get();
-        foreach ($campos as $campo) {
-            $asociacion = new AsociacionCamposServicios();
-            $asociacion->campo_servicio_crm_id = $campo->id;
-            $asociacion->formulario_id = $request['formulario_id'];
-            $asociacion->estado = true;
-            if (isset($request[strtoupper($campo->nombre)])) {
-                $asociacion->campo_formulario = $request[strtoupper($campo->nombre)];
+        if (count($camposDelete) > 0) {
+            foreach ($camposDelete as $item) {
+                DB::table('asociaciones_campos_servicios')
+                    ->where('id', $item->id)
+                    ->delete();
             }
-            $asociacion->save();
         }
 
+        $servicioCrmXFormulario = DB::table('servicios_crms_x_formularios')
+            ->where('formulario_id', $request['formulario_id'])
+            ->where('servicio_crm_id', $request['servicio_crm_id'])
+            ->delete();
+        if (!isset($request['eliminar'])) {
 
-        Flash::success('Configuracion guardada con exito');
+            $request['estado'] = true;
+            $input = $request->all();
+            $servicioCrmXFormulario = $this->servicioCrmXFormularioRepository->create($input);
 
-        return redirect(route('admin.formularios.index'));
+            $campos = CampoServicioCrm::where('servicio_crm_id', $request['servicio_crm_id'])->get();
+            foreach ($campos as $campo) {
+                $asociacion = new AsociacionCamposServicios();
+                $asociacion->campo_servicio_crm_id = $campo->id;
+                $asociacion->formulario_id = $request['formulario_id'];
+                $asociacion->estado = true;
+                if (isset($request[strtoupper($campo->nombre)])) {
+                    $asociacion->campo_formulario = $request[strtoupper($campo->nombre)];
+                }
+                $asociacion->save();
+            }
+
+            Flash::success('Configuracion guardada con exito');
+
+            return redirect(route('admin.formularios.index'));
+        } else {
+            Flash::success('Configuracion eliminada con exito');
+
+            return redirect(route('admin.formularios.index'));
+        }
     }
 
     /**

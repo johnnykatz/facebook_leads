@@ -70,7 +70,7 @@ class CrmService
             $datosFormulario = DB::select('SELECT form.*
                           FROM ' . $formulario->db_name . ' as form    
                             
-                         where form.formulario_id=' . $formulario->id . ' and enviado_crm=false');
+                         where form.formulario_id=' . $formulario->id . ' and enviado_crm=false limit 30');
 
 //            exit;
             foreach ($datosFormulario as $dato) {

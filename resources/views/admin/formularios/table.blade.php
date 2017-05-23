@@ -1,6 +1,7 @@
 <div class="table-responsive">
     <table class="table table-responsive" id="formularios-table">
         <thead>
+        <th>id</th>
         <th>Nombre</th>
         <th>Form Id</th>
         <th>Nombre Tabla en DB</th>
@@ -12,6 +13,7 @@
         <tbody>
         @foreach($formularios as $formulario)
             <tr>
+                <td>{!! $formulario->id !!}</td>
                 <td>{!! $formulario->nombre !!}</td>
                 <td>{!! $formulario->form_id !!}</td>
                 <td>{!! $formulario->db_name !!}</td>
@@ -38,13 +40,17 @@
                         <a href="{!! route('admin.formularios.edit', [$formulario->id]) !!}" class='btn btn-default'><i
                                     class="glyphicon glyphicon-edit"></i></a>
                         {{--<a href="{!! route('admin.formularios.crear_estructura', [$formulario->id]) !!}"--}}
-                           {{--class='btn btn-default' title="Crear estructura"><i--}}
-                                    {{--class="glyphicon glyphicon-cog"></i></a>--}}
+                        {{--class='btn btn-default' title="Crear estructura"><i--}}
+                        {{--class="glyphicon glyphicon-cog"></i></a>--}}
 
-                        <a href="{!! route('admin.formularios.listar_datos', [$formulario->id]) !!}" class='btn btn-default' title="Mostrar Leds"><i
-                                    class="glyphicon glyphicon-list" ></i></a>
-
-
+                        <a href="{!! route('admin.formularios.listar_datos', [$formulario->id]) !!}"
+                           class='btn btn-default' title="Mostrar Leads"><i
+                                    class="glyphicon glyphicon-list"></i></a>
+                        @if(count($formulario->serviciosCrmsXFormularios)==0)
+                            <a href="{!! route('admin.servicioCrmXFormularios.create', [$formulario->id]) !!}"
+                               class='btn btn-default' title="Configurar Sincronizacion"><i
+                                        class="glyphicon glyphicon-cloud"></i></a>
+                        @endif
 
                         {{--                    {!! Form::button('<i class="glyphicon glyphicon-trash"></i>', ['type' => 'submit', 'class' => 'btn btn-danger btn-xs', 'onclick' => "return confirm('Are you sure?')"]) !!}--}}
                     </div>

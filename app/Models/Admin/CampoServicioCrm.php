@@ -5,22 +5,19 @@ namespace App\Models\Admin;
 use Eloquent as Model;
 
 /**
- * Class Formulario
+ * Class CampoServicioCrm
  * @package App\Models\Admin
  */
-class Formulario extends Model
+class CampoServicioCrm extends Model
 {
 
-    public $table = 'formularios';
+    public $table = 'campos_servicios_crms';
 
 
     public $fillable = [
         'nombre',
-        'form_id',
-        'activo',
-        'con_estructura',
-        'db_name',
-        'fecha_sincronizacion'
+        'servicio_crm_id',
+        'estado'
     ];
 
     /**
@@ -30,9 +27,8 @@ class Formulario extends Model
      */
     protected $casts = [
         'nombre' => 'string',
-        'form_id' => 'string',
-        'activo' => 'boolean',
-        'con_estructura' => 'boolean'
+        'servicio_crm_id' => 'integer',
+        'estado' => 'boolean'
     ];
 
     /**
@@ -41,16 +37,15 @@ class Formulario extends Model
      * @var array
      */
     public static $rules = [
-        'form_id' => 'required|numeric|unique:formularios',
 
     ];
 
 
-
-    public function serviciosCrmsXFormularios()
+    public function servicioCrm()
     {
-        return $this->hasMany('App\Models\Admin\ServicioCrmXFormulario');
+        return $this->belongsTo('App\Models\Admin\ServicioCrm');
     }
+
 
     public function asociacionesCamposServicios()
     {

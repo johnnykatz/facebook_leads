@@ -75,6 +75,7 @@ Route::get('perfil', 'API\pruebas@perfil');
 Route::get('formularios', 'API\pruebas@formularios');
 Route::get('crear_estructura', 'API\pruebas@crearEstructura');
 Route::get('sincronizar', 'API\pruebas@sincronizar');
+Route::get('enviarDatos/{servicio}', 'API\pruebas@enviarDatos');
 
 
 Route::get('callback', 'Admin\FacebookController@callback');
@@ -120,3 +121,65 @@ Route::patch('admin/users/{users}', ['as' => 'admin.users.update', 'uses' => 'Ad
 Route::delete('admin/users/{users}', ['as' => 'admin.users.destroy', 'uses' => 'Admin\UserController@destroy', 'middleware' => ['auth']]);
 Route::get('admin/users/{users}', ['as' => 'admin.users.show', 'uses' => 'Admin\UserController@show', 'middleware' => ['auth']]);
 Route::get('admin/users/{users}/edit', ['as' => 'admin.users.edit', 'uses' => 'Admin\UserController@edit', 'middleware' => ['auth']]);
+
+
+
+Route::get('admin/crms', ['as'=> 'admin.crms.index', 'uses' => 'Admin\CrmController@index']);
+Route::post('admin/crms', ['as'=> 'admin.crms.store', 'uses' => 'Admin\CrmController@store']);
+Route::get('admin/crms/create', ['as'=> 'admin.crms.create', 'uses' => 'Admin\CrmController@create']);
+Route::put('admin/crms/{crms}', ['as'=> 'admin.crms.update', 'uses' => 'Admin\CrmController@update']);
+Route::patch('admin/crms/{crms}', ['as'=> 'admin.crms.update', 'uses' => 'Admin\CrmController@update']);
+Route::delete('admin/crms/{crms}', ['as'=> 'admin.crms.destroy', 'uses' => 'Admin\CrmController@destroy']);
+Route::get('admin/crms/{crms}', ['as'=> 'admin.crms.show', 'uses' => 'Admin\CrmController@show']);
+Route::get('admin/crms/{crms}/edit', ['as'=> 'admin.crms.edit', 'uses' => 'Admin\CrmController@edit']);
+
+
+Route::get('admin/servicioCrms', ['as'=> 'admin.servicioCrms.index', 'uses' => 'Admin\ServicioCrmController@index']);
+Route::post('admin/servicioCrms', ['as'=> 'admin.servicioCrms.store', 'uses' => 'Admin\ServicioCrmController@store']);
+Route::get('admin/servicioCrms/create', ['as'=> 'admin.servicioCrms.create', 'uses' => 'Admin\ServicioCrmController@create']);
+Route::put('admin/servicioCrms/{servicioCrms}', ['as'=> 'admin.servicioCrms.update', 'uses' => 'Admin\ServicioCrmController@update']);
+Route::patch('admin/servicioCrms/{servicioCrms}', ['as'=> 'admin.servicioCrms.update', 'uses' => 'Admin\ServicioCrmController@update']);
+Route::delete('admin/servicioCrms/{servicioCrms}', ['as'=> 'admin.servicioCrms.destroy', 'uses' => 'Admin\ServicioCrmController@destroy']);
+Route::get('admin/servicioCrms/{servicioCrms}', ['as'=> 'admin.servicioCrms.show', 'uses' => 'Admin\ServicioCrmController@show']);
+Route::get('admin/servicioCrms/{servicioCrms}/edit', ['as'=> 'admin.servicioCrms.edit', 'uses' => 'Admin\ServicioCrmController@edit']);
+
+
+Route::get('admin/campoServicioCrms', ['as'=> 'admin.campoServicioCrms.index', 'uses' => 'Admin\CampoServicioCrmController@index']);
+Route::post('admin/campoServicioCrms', ['as'=> 'admin.campoServicioCrms.store', 'uses' => 'Admin\CampoServicioCrmController@store']);
+Route::get('admin/campoServicioCrms/create', ['as'=> 'admin.campoServicioCrms.create', 'uses' => 'Admin\CampoServicioCrmController@create']);
+Route::put('admin/campoServicioCrms/{campoServicioCrms}', ['as'=> 'admin.campoServicioCrms.update', 'uses' => 'Admin\CampoServicioCrmController@update']);
+Route::patch('admin/campoServicioCrms/{campoServicioCrms}', ['as'=> 'admin.campoServicioCrms.update', 'uses' => 'Admin\CampoServicioCrmController@update']);
+Route::delete('admin/campoServicioCrms/{campoServicioCrms}', ['as'=> 'admin.campoServicioCrms.destroy', 'uses' => 'Admin\CampoServicioCrmController@destroy']);
+Route::get('admin/campoServicioCrms/{campoServicioCrms}', ['as'=> 'admin.campoServicioCrms.show', 'uses' => 'Admin\CampoServicioCrmController@show']);
+Route::get('admin/campoServicioCrms/{campoServicioCrms}/edit', ['as'=> 'admin.campoServicioCrms.edit', 'uses' => 'Admin\CampoServicioCrmController@edit']);
+
+
+Route::get('admin/servicioCrmXFormularios', ['as'=> 'admin.servicioCrmXFormularios.index', 'uses' => 'Admin\ServicioCrmXFormularioController@index']);
+Route::post('admin/servicioCrmXFormularios', ['as'=> 'admin.servicioCrmXFormularios.store', 'uses' => 'Admin\ServicioCrmXFormularioController@store']);
+Route::get('admin/servicioCrmXFormularios/create/{formulario_id}', ['as'=> 'admin.servicioCrmXFormularios.create', 'uses' => 'Admin\ServicioCrmXFormularioController@create']);
+Route::put('admin/servicioCrmXFormularios/{servicioCrmXFormularios}', ['as'=> 'admin.servicioCrmXFormularios.update', 'uses' => 'Admin\ServicioCrmXFormularioController@update']);
+Route::patch('admin/servicioCrmXFormularios/{servicioCrmXFormularios}', ['as'=> 'admin.servicioCrmXFormularios.update', 'uses' => 'Admin\ServicioCrmXFormularioController@update']);
+Route::delete('admin/servicioCrmXFormularios/{servicioCrmXFormularios}', ['as'=> 'admin.servicioCrmXFormularios.destroy', 'uses' => 'Admin\ServicioCrmXFormularioController@destroy']);
+Route::get('admin/servicioCrmXFormularios/{servicioCrmXFormularios}', ['as'=> 'admin.servicioCrmXFormularios.show', 'uses' => 'Admin\ServicioCrmXFormularioController@show']);
+Route::get('admin/servicioCrmXFormularios/{servicioCrmXFormularios}/edit', ['as'=> 'admin.servicioCrmXFormularios.edit', 'uses' => 'Admin\ServicioCrmXFormularioController@edit']);
+
+
+Route::get('admin/asociacionCamposServicios', ['as'=> 'admin.asociacionCamposServicios.index', 'uses' => 'Admin\AsociacionCamposServiciosController@index']);
+Route::post('admin/asociacionCamposServicios', ['as'=> 'admin.asociacionCamposServicios.store', 'uses' => 'Admin\AsociacionCamposServiciosController@store']);
+Route::get('admin/asociacionCamposServicios/create', ['as'=> 'admin.asociacionCamposServicios.create', 'uses' => 'Admin\AsociacionCamposServiciosController@create']);
+Route::put('admin/asociacionCamposServicios/{asociacionCamposServicios}', ['as'=> 'admin.asociacionCamposServicios.update', 'uses' => 'Admin\AsociacionCamposServiciosController@update']);
+Route::patch('admin/asociacionCamposServicios/{asociacionCamposServicios}', ['as'=> 'admin.asociacionCamposServicios.update', 'uses' => 'Admin\AsociacionCamposServiciosController@update']);
+Route::delete('admin/asociacionCamposServicios/{asociacionCamposServicios}', ['as'=> 'admin.asociacionCamposServicios.destroy', 'uses' => 'Admin\AsociacionCamposServiciosController@destroy']);
+Route::get('admin/asociacionCamposServicios/{asociacionCamposServicios}', ['as'=> 'admin.asociacionCamposServicios.show', 'uses' => 'Admin\AsociacionCamposServiciosController@show']);
+Route::get('admin/asociacionCamposServicios/{asociacionCamposServicios}/edit', ['as'=> 'admin.asociacionCamposServicios.edit', 'uses' => 'Admin\AsociacionCamposServiciosController@edit']);
+
+//
+//
+//Route::get('admin/formularioEnviadoXServicios', ['as'=> 'admin.formularioEnviadoXServicios.index', 'uses' => 'Admin\FormularioEnviadoXServicioController@index']);
+//Route::post('admin/formularioEnviadoXServicios', ['as'=> 'admin.formularioEnviadoXServicios.store', 'uses' => 'Admin\FormularioEnviadoXServicioController@store']);
+//Route::get('admin/formularioEnviadoXServicios/create', ['as'=> 'admin.formularioEnviadoXServicios.create', 'uses' => 'Admin\FormularioEnviadoXServicioController@create']);
+//Route::put('admin/formularioEnviadoXServicios/{formularioEnviadoXServicios}', ['as'=> 'admin.formularioEnviadoXServicios.update', 'uses' => 'Admin\FormularioEnviadoXServicioController@update']);
+//Route::patch('admin/formularioEnviadoXServicios/{formularioEnviadoXServicios}', ['as'=> 'admin.formularioEnviadoXServicios.update', 'uses' => 'Admin\FormularioEnviadoXServicioController@update']);
+//Route::delete('admin/formularioEnviadoXServicios/{formularioEnviadoXServicios}', ['as'=> 'admin.formularioEnviadoXServicios.destroy', 'uses' => 'Admin\FormularioEnviadoXServicioController@destroy']);
+//Route::get('admin/formularioEnviadoXServicios/{formularioEnviadoXServicios}', ['as'=> 'admin.formularioEnviadoXServicios.show', 'uses' => 'Admin\FormularioEnviadoXServicioController@show']);
+//Route::get('admin/formularioEnviadoXServicios/{formularioEnviadoXServicios}/edit', ['as'=> 'admin.formularioEnviadoXServicios.edit', 'uses' => 'Admin\FormularioEnviadoXServicioController@edit']);

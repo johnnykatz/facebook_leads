@@ -17,6 +17,7 @@ class Kernel extends ConsoleKernel
         Commands\pruebas::class,
         Commands\SincronizarLeads::class,
         Commands\SincronizarEstructura::class,
+        Commands\SincronizarCrm::class,
 
         // Commands\Inspire::class,
     ];

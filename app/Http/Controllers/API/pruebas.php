@@ -3,11 +3,15 @@
 namespace App\Http\Controllers\API;
 
 
+use App\Models\Admin\Crm;
 use App\Models\Admin\Formulario;
+use App\Models\Admin\ServicioCrm;
+use App\Models\Admin\ServicioCrmXFormulario;
 use App\Models\Admin\Token;
 
 use App\Providers\FacebookProvider;
 use App\Providers\FuncionesProvider;
+use App\Services\CrmService;
 use Doctrine\DBAL\Schema\Schema;
 use FacebookAds\Api;
 use FacebookAds\Object\Page;
@@ -237,6 +241,13 @@ class pruebas extends Controller
         $facebook = new FacebookProvider();
         $facebook->sincronizarLeads();
 
+    }
+
+
+    function enviarDatos($servicio)
+    {
+        $servicio = new CrmService($servicio);
+        $servicio->enviarDatos();
     }
 
 

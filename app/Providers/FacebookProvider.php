@@ -196,7 +196,7 @@ class FacebookProvider
                     foreach ($data['field_data'] as $field) {
                         $fields[] = FuncionesProvider::limpiaCadena($field['name']);
 //                    $values[] = FuncionesProvider::limpiaCadenaDato((string)$field['values'][0]);
-                        $values[] = (string)$field['values'][0];
+                        $values[] = addslashes((string)$field['values'][0]);
                     }
                     $valores = "'" . implode("','", $values) . "'";
 
@@ -246,6 +246,7 @@ class FacebookProvider
                     $table->string('lead_id');
                     $table->dateTime('created_time');
                     $table->string('formulario_id');
+                    $table->boolean('enviado_crm')->default(false);
 
                     foreach ($fields as $field) {
                         $table->string(FuncionesProvider::limpiaCadena($field['name']));

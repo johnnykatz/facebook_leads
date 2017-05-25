@@ -16,6 +16,9 @@ class CreateCampoServicioCrmsTable extends Migration
         Schema::create('campos_servicios_crms', function (Blueprint $table) {
             $table->increments('id');
             $table->string('nombre');
+            $table->boolean('requerido')->default(false);
+            $table->boolean('codifica')->default(false);
+            $table->string('tipo');
             $table->integer('servicio_crm_id')->unsigned();
             $table->boolean('estado')->default(true);
             $table->timestamps();

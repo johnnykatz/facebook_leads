@@ -4,6 +4,25 @@
     {!! Form::text('nombre', null, ['class' => 'form-control']) !!}
 </div>
 
+<!-- Tipo Field -->
+<div class="form-group col-sm-6">
+    {!! Form::label('tipo', 'Tipo:') !!}
+    {!! Form::text('tipo', null, ['class' => 'form-control']) !!}
+</div>
+
+<!-- Requerido Field -->
+<div class="form-group col-sm-6">
+    {!! Form::label('requerido', 'Requerido:') !!}
+    {!! Form::text('requerido', null, ['class' => 'form-control']) !!}
+</div>
+
+<!-- Requerido Field -->
+<div class="form-group col-sm-6">
+    {!! Form::label('codifica', 'Codifica:') !!}
+    {!! Form::text('codifica', null, ['class' => 'form-control']) !!}
+</div>
+
+
 <!-- Servicio Crm Id Field -->
 <div class="form-group col-sm-6">
     {!! Form::label('servicio_crm_id', 'Servicio Crm Id:') !!}

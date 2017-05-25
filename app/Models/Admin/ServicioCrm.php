@@ -17,6 +17,7 @@ class ServicioCrm extends Model
     public $fillable = [
         'nombre',
         'slug',
+        'datos',
         'estado',
         'crm_id'
     ];
@@ -29,6 +30,7 @@ class ServicioCrm extends Model
     protected $casts = [
         'nombre' => 'string',
         'slug' => 'string',
+        'datos' => 'string',
         'estado' => 'boolean',
         'crm_id' => 'integer'
     ];

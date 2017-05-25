@@ -16,6 +16,8 @@ class CampoServicioCrm extends Model
 
     public $fillable = [
         'nombre',
+        'requerido',
+        'tipo',
         'servicio_crm_id',
         'estado'
     ];

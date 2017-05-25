@@ -17,7 +17,7 @@ class CreateFormularioEnviadoXServiciosTable extends Migration
             $table->increments('id');
             $table->integer('formulario_id')->unsigned();
             $table->integer('servicio_crm_id')->unsigned();
-            $table->integer('registro_id');
+            $table->string('registro_id', 50);
             $table->timestamps();
 
             $table->foreign('formulario_id')->references('id')->on('formularios');

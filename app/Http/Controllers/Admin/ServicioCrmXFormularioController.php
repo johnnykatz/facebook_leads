@@ -105,8 +105,8 @@ class ServicioCrmXFormularioController extends InfyOmBaseController
                 $asociacion->campo_servicio_crm_id = $campo->id;
                 $asociacion->formulario_id = $request['formulario_id'];
                 $asociacion->estado = true;
-                if (isset($request[strtoupper($campo->nombre)])) {
-                    $asociacion->campo_formulario = $request[strtoupper($campo->nombre)];
+                if (isset($request[$campo->nombre])) {
+                    $asociacion->campo_formulario = $request[$campo->nombre];
                 }
                 $asociacion->save();
             }

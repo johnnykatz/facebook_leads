@@ -30,76 +30,77 @@ class CrmService
     public function enviarDatos()
     {
         $serviciosCrmsXformularios = ServicioCrmXFormulario::where('servicio_crm_id', $this->servicio->id)->get();
+        if (count($serviciosCrmsXformularios) > 0) {
+            foreach ($serviciosCrmsXformularios as $servicioCrmsXformulario) {
 
-        foreach ($serviciosCrmsXformularios as $servicioCrmsXformulario) {
+                $formulario = $servicioCrmsXformulario->formulario;
 
-            $formulario = $servicioCrmsXformulario->formulario;
 
-            $estructura = array();
-            $campos = DB::table('campos_servicios_crms as c')
-                ->join('asociaciones_campos_servicios as a', 'a.campo_servicio_crm_id', '=', 'c.id')
-                ->where('c.servicio_crm_id', '=', $this->servicio->id)
-                ->where('a.formulario_id', '=', $formulario->id)
-                ->where('c.estado', true)
-                ->select('c.nombre as campo_crm', 'a.campo_formulario')
-                ->get();
-            foreach ($campos as $campo) {
-                $estructura[$campo->campo_formulario] = $campo->campo_crm;
-            }
-//            JOIN formularios as f on f.id=form.formulario_id
-//                          JOIN servicios_crms
-//            $datosFormulario = DB::select('SELECT form.*
-//                          FROM ' . $formulario->db_name . ' as form
-//                          JOIN servicios_crms_x_formularios as ser on ser.formulario_id=form.formulario_id
-//
-//                          LEFT JOIN formularios_enviados_x_servicios as fe on fe.registro_id=form.id
-//
-//
-//                 where ser.servicio_crm_id='.$this->servicio->id.' and fe.formulario_id=' . $formulario->id . ' and form.id is null
-//
-//
-//                order by created_time desc');
+                $campos = DB::table('campos_servicios_crms as c')
+                    ->join('asociaciones_campos_servicios as a', 'a.campo_servicio_crm_id', '=', 'c.id')
+                    ->where('c.servicio_crm_id', '=', $this->servicio->id)
+                    ->where('a.formulario_id', '=', $formulario->id)
+                    ->where('c.estado', true)
+                    ->select('c.nombre as campo_crm', 'a.campo_formulario', 'c.requerido', 'c.tipo', 'codifica')
+                    ->get();
+                $estructura = array();
+                $requeridos = array();
+                foreach ($campos as $campo) {
+                    $estructura[$campo->campo_formulario] = $campo->campo_crm;
+                    $requeridos[$campo->campo_formulario] = $campo->requerido;
+                    $tipos[$campo->campo_formulario] = $campo->tipo;
+                    $codifica[$campo->campo_formulario] = $campo->codifica;
+                }
 
-//            $datosFormulario = DB::select('SELECT form.*
-//                          FROM ' . $formulario->db_name . ' as form
-//                          LEFT JOIN formularios_enviados_x_servicios as fe on fe.registro_id=form.id
-//                          JOIN servicios_crms_x_formularios as ser on ser.formulario_id=form.formulario_id
-//
-//                         where ser.servicio_crm_id=' . $this->servicio->id . ' and form.formulario_id=' . $formulario->id . ' and fe.registro_id is null');
+                $datosFormulario = DB::select('SELECT form.*
+                          FROM ' . $formulario->db_name . ' as form
+                          LEFT JOIN formularios_enviados_x_servicios as fe on fe.registro_id=form.id
+                         where fe.registro_id is null');
 
-            $datosFormulario = DB::select('SELECT form.*
-                          FROM ' . $formulario->db_name . ' as form    
-                            
-                         where form.formulario_id=' . $formulario->id . ' and enviado_crm=false limit 3');
+                if (count($datosFormulario) > 0) {
+                    foreach ($datosFormulario as $dato) {
+                        $datosAEnviar = null;
+                        $dato = (array)$dato;
+                        foreach ($estructura as $key => $campo) {
+                            if ($key != "") {
+                                //si tiene datos pregunto el tipo para pasarle el correcto
+                                if ($tipos[$key] == 'numeric') {
+                                    $datoTmp = preg_replace(sprintf('~[^%s]++~i', '0-9'), '', $dato[$key]);
+                                    if (isset($datoTmp) and is_numeric($datoTmp)) {
+                                        $datosAEnviar .= "&" . $campo . "=" . $datoTmp;
+                                    } else {
+                                        $datosAEnviar .= "&" . $campo . "=" . (int)"1";
+                                    }
+                                } else if ($tipos[$key] == 'time_unix') {
+                                    $datosAEnviar .= "&" . $campo . "=" . strtotime($dato[$key]);
+                                } else {
+                                    $datosAEnviar .= "&" . $campo . "=" . urlencode($dato[$key]);
+                                }
+                            } else if (isset($requeridos[$key]) and $requeridos[$key] == 1) {
+                                //si no tiene datos y es requerido pregunto el tipo para asignarle
+                                if ($tipos[$key] == 'numeric') {
+                                    $datosAEnviar .= "&" . $campo . "=" . (int)"1";
+                                } else {
+                                    $datosAEnviar .= "&" . $campo . "=null";
+                                }
+                            } else {
+                                //sino tiene datos y no es requerido envio null
+                                $datosAEnviar .= "&" . $campo . "=null";
+                            }
+                        }
+                        $response = $this->sendDatos($datosAEnviar);
+                        if ($response->resultado->estado == 1) {
+                            $enviado = new FormularioEnviadoXServicio();
+                            $enviado->formulario_id = $dato['formulario_id'];
+                            $enviado->servicio_crm_id = $this->servicio->id;
+                            $enviado->registro_id = $dato['id'];
+                            $enviado->save();
+                        }
 
-//            exit;
-            foreach ($datosFormulario as $dato) {
-                $datosAEnviar = "&formulario" . "=" . $formulario->nombre;
-                $dato = (array)$dato;
-                foreach ($estructura as $key => $campo) {
-                    $kei = key($estructura);
-                    if ($key != "") {
-                        $datosAEnviar .= "&" . $campo . "=" . $dato[$key];
-                    } else {
-                        $datosAEnviar .= "&" . $campo . "=null";
                     }
                 }
-                $response = $this->sendDatos($datosAEnviar);
-                if ($response->estado == 1) {
-//                    $enviado = new FormularioEnviadoXServicio();
-//                    $enviado->formulario_id = $dato['formulario_id'];
-//                    $enviado->servicio_crm_id = $this->servicio->id;
-//                    $enviado->registro_id = $dato['id'];
-//                    $enviado->save();
-                    DB::table($formulario->db_name)
-                        ->where('id', $dato['id'])
-                        ->update(['enviado_crm' => true]);
-
-                }
 
             }
-
-
         }
     }
 
@@ -107,7 +108,7 @@ class CrmService
     private function sendDatos($data)
     {
         try {
-            $url = $this->servicio->crm->endpoint . '/' . $this->servicio->datos . urlencode($data);
+            $url = $this->servicio->crm->endpoint . '/' . $this->servicio->datos . $data;
             return json_decode(file_get_contents($url));
 
         } catch (Exception $e) {

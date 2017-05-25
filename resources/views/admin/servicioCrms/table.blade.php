@@ -1,7 +1,9 @@
 <table class="table table-responsive" id="servicioCrms-table">
     <thead>
+        <th>Id</th>
         <th>Nombre</th>
         <th>Slug</th>
+        <th>Datos</th>
         <th>Estado</th>
         <th>Crm Id</th>
         <th colspan="3">Action</th>
@@ -9,8 +11,10 @@
     <tbody>
     @foreach($servicioCrms as $servicioCrm)
         <tr>
+            <td>{!! $servicioCrm->id !!}</td>
             <td>{!! $servicioCrm->nombre !!}</td>
             <td>{!! $servicioCrm->slug !!}</td>
+            <td>{!! $servicioCrm->datos !!}</td>
             <td>{!! $servicioCrm->estado !!}</td>
             <td>{!! $servicioCrm->crm_id !!}</td>
             <td>

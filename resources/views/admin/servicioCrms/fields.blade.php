@@ -6,6 +6,12 @@
 
 <!-- Slug Field -->
 <div class="form-group col-sm-6">
+    {!! Form::label('datos', 'Datos:') !!}
+    {!! Form::text('datos', null, ['class' => 'form-control']) !!}
+</div>
+
+<!-- Slug Field -->
+<div class="form-group col-sm-6">
     {!! Form::label('slug', 'Slug:') !!}
     {!! Form::text('slug', null, ['class' => 'form-control']) !!}
 </div>

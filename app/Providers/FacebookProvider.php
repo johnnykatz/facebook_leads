@@ -176,6 +176,8 @@ class FacebookProvider
                     $fields = array();
                     $values = array();
 
+                    $fields[] = 'id';
+                    $values[] = uniqid();
 
                     $fields[] = 'lead_id';
                     $values[] = $data['id'];
@@ -191,6 +193,9 @@ class FacebookProvider
 
                     $fields[] = 'formulario_id';
                     $values[] = $formulario->id;
+
+                    $fields[] = 'formulario';
+                    $values[] = $formulario->nombre;
 
 
                     foreach ($data['field_data'] as $field) {
@@ -242,11 +247,14 @@ class FacebookProvider
 
             try {
                 \Illuminate\Support\Facades\Schema::create('form_' . $formulario->form_id, function (Blueprint $table) use ($fields) {
-                    $table->increments('id');
+                    $table->string('id', 50);
                     $table->string('lead_id');
                     $table->dateTime('created_time');
                     $table->string('formulario_id');
-                    $table->boolean('enviado_crm')->default(false);
+                    $table->string('formulario');
+                    $table->boolean('habeas')->default(true);
+                    $table->boolean('terminos')->default(true);
+//                    $table->boolean('enviado_crm')->default(false);
 
                     foreach ($fields as $field) {
                         $table->string(FuncionesProvider::limpiaCadena($field['name']));

@@ -14,42 +14,79 @@
 {{--    {!! Form::text('estado', null, ['class' => 'form-control']) !!}--}}
 {{--</div>--}}
 
-
 <div class="form-group col-sm-6">
-    {!! Form::label('APELLIDO_CLIENTE', 'APELLIDO_CLIENTE:') !!}
-    {!! Form::select('APELLIDO_CLIENTE',$campos,null,['class'=>'form-control','placeholder'=>'seleccione...']) !!}
+    {!! Form::label('formulario', 'Formulario:') !!}
+    {!! Form::select('formulario',$campos,null,['class'=>'form-control','placeholder'=>'seleccione...']) !!}
 
 </div>
 
 <div class="form-group col-sm-6">
-    {!! Form::label('NOMBRE_CLIENTE', 'NOMBRE_CLIENTE:') !!}
-    {!! Form::select('NOMBRE_CLIENTE',$campos,null,['class'=>'form-control','placeholder'=>'seleccione...']) !!}
+    {!! Form::label('apellido', 'Apellido:') !!}
+    {!! Form::select('apellido',$campos,null,['class'=>'form-control','placeholder'=>'seleccione...']) !!}
 
 </div>
 
 <div class="form-group col-sm-6">
-    {!! Form::label('telefono_contacto', 'TELEFONO_CONTACTO:') !!}
-    {!! Form::select('TELEFONO_CONTACTO',$campos,null,['class'=>'form-control','placeholder'=>'seleccione...']) !!}
+    {!! Form::label('nombre', 'Nombre:') !!}
+    {!! Form::select('nombre',$campos,null,['class'=>'form-control','placeholder'=>'seleccione...']) !!}
 
 </div>
 
 <div class="form-group col-sm-6">
-    {!! Form::label('EMAIL_CONTACTO', 'EMAIL_CONTACTO:') !!}
-    {!! Form::select('EMAIL_CONTACTO',$campos,null,['class'=>'form-control','placeholder'=>'seleccione...']) !!}
+    {!! Form::label('timestamp', 'Timestamp:') !!}
+    {!! Form::select('timestamp',$campos,null,['class'=>'form-control','placeholder'=>'seleccione...']) !!}
 
 </div>
 
 <div class="form-group col-sm-6">
-    {!! Form::label('IDENTIFICACION_CLIENTE', 'IDENTIFICACION_CLIENTE:') !!}
-    {!! Form::select('IDENTIFICACION_CLIENTE',$campos,null,['class'=>'form-control','placeholder'=>'seleccione...']) !!}
+    {!! Form::label('direccion', 'Direccion:') !!}
+    {!! Form::select('direccion',$campos,null,['class'=>'form-control','placeholder'=>'seleccione...']) !!}
 
+</div>
+
+<div class="form-group col-sm-6">
+    {!! Form::label('concesionario', 'Concesionario:') !!}
+    {!! Form::select('concesionario',$campos,null,['class'=>'form-control','placeholder'=>'seleccione...']) !!}
+
+</div>
+
+
+<div class="form-group col-sm-6">
+    {!! Form::label('cedula', 'Cedula:') !!}
+    {!! Form::select('cedula',$campos,null,['class'=>'form-control','placeholder'=>'seleccione...']) !!}
+
+</div>
+
+<div class="form-group col-sm-6">
+    {!! Form::label('email', 'Email:') !!}
+    {!! Form::select('email',$campos,null,['class'=>'form-control','placeholder'=>'seleccione...']) !!}
+
+</div>
+
+<div class="form-group col-sm-6">
+    {!! Form::label('telefono', 'Telefono:') !!}
+    {!! Form::select('telefono',$campos,null,['class'=>'form-control','placeholder'=>'seleccione...']) !!}
+
+</div>
+
+<div class="form-group col-sm-6">
+    {!! Form::label('ciudad', 'Ciudad:') !!}
+    {!! Form::select('ciudad',$campos,null,['class'=>'form-control','placeholder'=>'seleccione...']) !!}
+</div>
+
+<div class="form-group col-sm-6">
+    {!! Form::label('habeas', 'Habeas:') !!}
+    {!! Form::select('habeas',$campos,null,['class'=>'form-control','placeholder'=>'seleccione...']) !!}
+</div>
+
+<div class="form-group col-sm-6">
+    {!! Form::label('terminos', 'Terminos:') !!}
+    {!! Form::select('terminos',$campos,null,['class'=>'form-control','placeholder'=>'seleccione...']) !!}
 </div>
 
 <div class="form-group col-sm-12">
-
     {!! Form::label('eliminar', 'Eliminar sincronizacion:') !!}
     {!! Form::checkbox('eliminar')!!}
-
 </div>
 
 

@@ -8,8 +8,8 @@
     <tbody>
     @foreach($servicioCrmXFormularios as $servicioCrmXFormulario)
         <tr>
-            <td>{!! $servicioCrmXFormulario->servicio_crm_id !!}</td>
-            <td>{!! $servicioCrmXFormulario->formulario_id !!}</td>
+            <td>{!! $servicioCrmXFormulario->servicioCrm->nombre !!}</td>
+            <td>{!! $servicioCrmXFormulario->Formulario->nombre !!}</td>
             <td>{!! $servicioCrmXFormulario->estado !!}</td>
             <td>
                 {!! Form::open(['route' => ['admin.servicioCrmXFormularios.destroy', $servicioCrmXFormulario->id], 'method' => 'delete']) !!}

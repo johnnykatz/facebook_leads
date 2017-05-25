@@ -218,7 +218,7 @@ class FormularioController extends InfyOmBaseController
     {
         $formulario = Formulario::find($id);
 
-        $estructura = DB::select('SELECT COLUMN_NAME
+        $estructura = DB::select('SELECT distinct(COLUMN_NAME)
                           FROM INFORMATION_SCHEMA.COLUMNS
                           WHERE table_name ="' . $formulario->db_name . '"');
 

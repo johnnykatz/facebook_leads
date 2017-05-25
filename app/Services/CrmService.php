@@ -70,7 +70,7 @@ class CrmService
             $datosFormulario = DB::select('SELECT form.*
                           FROM ' . $formulario->db_name . ' as form    
                             
-                         where form.formulario_id=' . $formulario->id . ' and enviado_crm=false limit 30');
+                         where form.formulario_id=' . $formulario->id . ' and enviado_crm=false limit 3');
 
 //            exit;
             foreach ($datosFormulario as $dato) {
@@ -85,7 +85,7 @@ class CrmService
                     }
                 }
                 $response = $this->sendDatos($datosAEnviar);
-                if ($response->estado = 1) {
+                if ($response->estado == 1) {
 //                    $enviado = new FormularioEnviadoXServicio();
 //                    $enviado->formulario_id = $dato['formulario_id'];
 //                    $enviado->servicio_crm_id = $this->servicio->id;

@@ -238,38 +238,39 @@ class FacebookProvider
             $form = new LeadgenForm($formulario->form_id);
             $fields = $form->getFields();
             $leads = $form->getLeads();
+            if (count($leads) > 0) {
+                foreach ($leads as $lead) {
+                    $data = $lead->getData();
+                    $fields = $data['field_data'];
+                    break;
+                }
 
-            foreach ($leads as $lead) {
-                $data = $lead->getData();
-                $fields = $data['field_data'];
-                break;
-            }
-
-            try {
-                \Illuminate\Support\Facades\Schema::create('form_' . $formulario->form_id, function (Blueprint $table) use ($fields) {
-                    $table->string('id', 50);
-                    $table->string('lead_id');
-                    $table->dateTime('created_time');
-                    $table->string('formulario_id');
-                    $table->string('formulario');
-                    $table->boolean('habeas')->default(true);
-                    $table->boolean('terminos')->default(true);
+                try {
+                    \Illuminate\Support\Facades\Schema::create('form_' . $formulario->form_id, function (Blueprint $table) use ($fields) {
+                        $table->string('id', 50);
+                        $table->string('lead_id');
+                        $table->dateTime('created_time');
+                        $table->string('formulario_id');
+                        $table->string('formulario');
+                        $table->boolean('habeas')->default(true);
+                        $table->boolean('terminos')->default(true);
 //                    $table->boolean('enviado_crm')->default(false);
 
-                    foreach ($fields as $field) {
-                        $table->string(FuncionesProvider::limpiaCadena($field['name']));
-                    }
-                    $table->timestamps();
-                });
-            } catch (\Illuminate\Database\QueryException $e) {
-                echo implode(',', $e->errorInfo);
-            }
-            $datosForm = $form->read();
+                        foreach ($fields as $field) {
+                            $table->string(FuncionesProvider::limpiaCadena($field['name']));
+                        }
+                        $table->timestamps();
+                    });
+                } catch (\Illuminate\Database\QueryException $e) {
+                    echo implode(',', $e->errorInfo);
+                }
+                $datosForm = $form->read();
 
-            $formulario->db_name = 'form_' . $formulario->form_id;
-            $formulario->con_estructura = true;
-            $formulario->nombre = $datosForm->name;
-            $formulario->save();
+                $formulario->db_name = 'form_' . $formulario->form_id;
+                $formulario->con_estructura = true;
+                $formulario->nombre = $datosForm->name;
+                $formulario->save();
+            }
         }
 
     }

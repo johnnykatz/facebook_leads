@@ -95,6 +95,8 @@ class CrmService
                             $enviado->servicio_crm_id = $this->servicio->id;
                             $enviado->registro_id = $dato['id'];
                             $enviado->save();
+                        } else {
+                            echo "error lead" . $dato['formulario_id'] . " registro " . $dato['id'];
                         }
 
                     }

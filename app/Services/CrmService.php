@@ -95,7 +95,9 @@ class CrmService
                             $enviado->servicio_crm_id = $this->servicio->id;
                             $enviado->registro_id = $dato['id'];
                             $enviado->save();
-                        } 
+                        } else {
+                            echo " no ingresa " . $dato['id'] . " formulario " . $dato['formulario_id'];
+                        }
 
                     }
                 }

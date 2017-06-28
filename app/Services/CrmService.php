@@ -132,8 +132,6 @@ class CrmService
         }
     }
 
-2
-
     private function sendDatos($data)
     {
         try {

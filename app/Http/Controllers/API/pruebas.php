@@ -22,6 +22,7 @@ use Faker\Provider\cs_CZ\DateTime;
 use Illuminate\Http\Request;
 use App\Http\Requests;
 use App\Http\Controllers\Controller;
+use Illuminate\Support\Facades\Mail;
 use JWTAuth;
 use App\User;
 use Illuminate\Support\Facades\Validator;
@@ -248,6 +249,22 @@ class pruebas extends Controller
     function enviarDatos($servicio)
     {
 
+//        Mail::send('home.blade.php', [], function ($m) {
+//            $m->subject('SUBJECT ');
+//            $m->to('johnnykatzg@gmail.com');
+////            $m->attach(storage_path('exports/temp/'.$user->id.'/'.$filename));
+//        });
+
+        $datos="hola que tal";
+        Mail::raw($datos, function ($message) {
+            $message->from('johnnykatzg@gmail.com', "algun texto");
+            $message->subject('Contacto');
+            $message->to('johnnykatzg@gmail.com');
+
+//            $message->cc("johnnykatzg@gmail.com","Katz Cesar");
+        });
+
+        exit;
         $servicio = new CrmService($servicio);
         $servicio->enviarDatos();
     }

@@ -3,15 +3,23 @@
 namespace App\Providers;
 
 use App\Models\Admin\Formulario;
+use Facebook\Exceptions\FacebookAuthenticationException;
+use Facebook\Exceptions\FacebookAuthorizationException;
+use Facebook\Exceptions\FacebookClientException;
+use Facebook\Exceptions\FacebookSDKException;
+use Facebook\Exceptions\FacebookServerException;
 use FacebookAds\Api;
 use App\Models\Admin\Token;
 
+use FacebookAds\Http\Exception\AuthorizationException;
 use FacebookAds\Object\Lead;
 use FacebookAds\Object\Page;
 use FacebookAds\Object\LeadgenForm;
+use Illuminate\Contracts\Validation\UnauthorizedException;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Database\Schema\Blueprint;
 use FacebookAds\Cursor;
+use Illuminate\Support\Facades\Mail;
 
 class FacebookProvider
 {
@@ -137,7 +145,7 @@ class FacebookProvider
     {
         Cursor::setDefaultUseImplicitFetch(true);
 
-        echo " Comienza sincronizacion" . chr(10) . chr(13);;
+        echo " Comienza sincronizacion" . chr(10) . chr(13);
         $this::conexionFacebook();
         $formularios = Formulario::where('activo', true)->where('con_estructura', true)->get();
         foreach ($formularios as $formulario) {
@@ -146,7 +154,20 @@ class FacebookProvider
 //            Lead::setDefaultReadFields();
             $form = new LeadgenForm($formulario->form_id);
             if ($formulario->fecha_ultimo_lead != null) {
-                $leads = $form->getLeads();
+                try {
+                    $leads = $form->getLeads();
+
+                } catch (AuthorizationException $e) {
+                    if ($e->getCode() == 190) {
+                        $mensaje = "Hubo un error al conectarse con Facebook, debe actualizar el token desde el administrador del sistema.";
+                    } else {
+                        $mensaje = "Hubo un error al conectarse con facebook, si continua recibiendo este mensaje en los proximos 4 minutos, comuniquese con el administrador del sistema.";
+                    }
+                    $this->sendMail($mensaje);
+                    echo " No se pudo conectar a Facebook" . chr(10) . chr(13);
+                    exit;
+                }
+
 
 //                $time_from = (new \DateTime($formulario->fecha_ultimo_lead))->getTimestamp();
 //                $leads = $form->getLeads(array(), array(
@@ -273,6 +294,15 @@ class FacebookProvider
             }
         }
 
+    }
+
+    private function sendMail($mensaje)
+    {
+        Mail::raw($mensaje, function ($message) {
+            $message->from('johnnykatzg@gmail.com', "Error en Sistema");
+            $message->subject('Error en Sistema');
+            $message->to('johnnykatzg@gmail.com');
+        });
     }
 
 }

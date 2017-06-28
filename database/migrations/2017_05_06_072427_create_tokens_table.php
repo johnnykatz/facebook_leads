@@ -14,6 +14,7 @@ class CreateTokensTable extends Migration
     public function up()
     {
         Schema::create('tokens', function (Blueprint $table) {
+            $table->engine = "InnoDB";
             $table->increments('id');
             $table->text('token');
             $table->date('expires_at');

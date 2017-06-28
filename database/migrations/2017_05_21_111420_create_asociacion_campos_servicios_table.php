@@ -14,6 +14,7 @@ class CreateAsociacionCamposServiciosTable extends Migration
     public function up()
     {
         Schema::create('asociaciones_campos_servicios', function (Blueprint $table) {
+            $table->engine = "InnoDB";
             $table->increments('id');
             $table->string('campo_formulario')->nullable();
             $table->integer('campo_servicio_crm_id')->unsigned();

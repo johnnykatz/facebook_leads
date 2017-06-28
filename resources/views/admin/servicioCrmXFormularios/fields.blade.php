@@ -21,6 +21,12 @@
 </div>
 
 <div class="form-group col-sm-6">
+    {!! Form::label('registroId', 'registroId:') !!}
+    {!! Form::select('registroId',$campos,null,['class'=>'form-control','placeholder'=>'seleccione...']) !!}
+
+</div>
+
+<div class="form-group col-sm-6">
     {!! Form::label('apellido', 'Apellido:') !!}
     {!! Form::select('apellido',$campos,null,['class'=>'form-control','placeholder'=>'seleccione...']) !!}
 

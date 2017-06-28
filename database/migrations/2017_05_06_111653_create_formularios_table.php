@@ -14,6 +14,7 @@ class CreateFormulariosTable extends Migration
     public function up()
     {
         Schema::create('formularios', function (Blueprint $table) {
+            $table->engine = "InnoDB";
             $table->increments('id');
             $table->string('nombre')->nullable();
             $table->string('form_id')->nullable();

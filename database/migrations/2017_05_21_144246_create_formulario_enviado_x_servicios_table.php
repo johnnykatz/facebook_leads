@@ -14,6 +14,7 @@ class CreateFormularioEnviadoXServiciosTable extends Migration
     public function up()
     {
         Schema::create('formularios_enviados_x_servicios', function (Blueprint $table) {
+            $table->engine = "InnoDB";
             $table->increments('id');
             $table->integer('formulario_id')->unsigned();
             $table->integer('servicio_crm_id')->unsigned();

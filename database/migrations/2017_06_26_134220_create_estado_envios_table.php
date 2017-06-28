@@ -3,7 +3,7 @@
 use Illuminate\Database\Migrations\Migration;
 use Illuminate\Database\Schema\Blueprint;
 
-class CreateCrmsTable extends Migration
+class CreateEstadoEnviosTable extends Migration
 {
 
     /**
@@ -13,12 +13,11 @@ class CreateCrmsTable extends Migration
      */
     public function up()
     {
-        Schema::create('crms', function (Blueprint $table) {
+        Schema::create('estados_envios', function (Blueprint $table) {
             $table->engine = "InnoDB";
             $table->increments('id');
             $table->string('nombre');
-            $table->text('endpoint')->nullable();
-            $table->boolean('estado')->default(true);
+            $table->string('slug');
             $table->timestamps();
         });
     }
@@ -30,6 +29,6 @@ class CreateCrmsTable extends Migration
      */
     public function down()
     {
-        Schema::drop('crms');
+        Schema::drop('estados_envios');
     }
 }

@@ -183,3 +183,13 @@ Route::get('admin/asociacionCamposServicios/{asociacionCamposServicios}/edit', [
 //Route::delete('admin/formularioEnviadoXServicios/{formularioEnviadoXServicios}', ['as'=> 'admin.formularioEnviadoXServicios.destroy', 'uses' => 'Admin\FormularioEnviadoXServicioController@destroy']);
 //Route::get('admin/formularioEnviadoXServicios/{formularioEnviadoXServicios}', ['as'=> 'admin.formularioEnviadoXServicios.show', 'uses' => 'Admin\FormularioEnviadoXServicioController@show']);
 //Route::get('admin/formularioEnviadoXServicios/{formularioEnviadoXServicios}/edit', ['as'=> 'admin.formularioEnviadoXServicios.edit', 'uses' => 'Admin\FormularioEnviadoXServicioController@edit']);
+
+
+Route::get('admin/estadoEnvios', ['as'=> 'admin.estadoEnvios.index', 'uses' => 'Admin\EstadoEnvioController@index']);
+Route::post('admin/estadoEnvios', ['as'=> 'admin.estadoEnvios.store', 'uses' => 'Admin\EstadoEnvioController@store']);
+Route::get('admin/estadoEnvios/create', ['as'=> 'admin.estadoEnvios.create', 'uses' => 'Admin\EstadoEnvioController@create']);
+Route::put('admin/estadoEnvios/{estadoEnvios}', ['as'=> 'admin.estadoEnvios.update', 'uses' => 'Admin\EstadoEnvioController@update']);
+Route::patch('admin/estadoEnvios/{estadoEnvios}', ['as'=> 'admin.estadoEnvios.update', 'uses' => 'Admin\EstadoEnvioController@update']);
+Route::delete('admin/estadoEnvios/{estadoEnvios}', ['as'=> 'admin.estadoEnvios.destroy', 'uses' => 'Admin\EstadoEnvioController@destroy']);
+Route::get('admin/estadoEnvios/{estadoEnvios}', ['as'=> 'admin.estadoEnvios.show', 'uses' => 'Admin\EstadoEnvioController@show']);
+Route::get('admin/estadoEnvios/{estadoEnvios}/edit', ['as'=> 'admin.estadoEnvios.edit', 'uses' => 'Admin\EstadoEnvioController@edit']);

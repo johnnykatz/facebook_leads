@@ -14,6 +14,7 @@ class CreateServicioCrmsTable extends Migration
     public function up()
     {
         Schema::create('servicios_crms', function (Blueprint $table) {
+            $table->engine = "InnoDB";
             $table->increments('id');
             $table->string('nombre');
             $table->string('slug')->nullable();

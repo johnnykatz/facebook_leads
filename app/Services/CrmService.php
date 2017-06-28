@@ -35,7 +35,9 @@ class CrmService
 
                 $formulario = $servicioCrmsXformulario->formulario;
 
-
+                if ($formulario->activo == false) {
+                    continue;
+                }
                 $campos = DB::table('campos_servicios_crms as c')
                     ->join('asociaciones_campos_servicios as a', 'a.campo_servicio_crm_id', '=', 'c.id')
                     ->where('c.servicio_crm_id', '=', $this->servicio->id)
@@ -60,8 +62,10 @@ class CrmService
                 if (count($datosFormulario) > 0) {
                     foreach ($datosFormulario as $dato) {
                         $datosAEnviar = null;
+                        $estadoDatos = true;
                         $dato = (array)$dato;
                         foreach ($estructura as $key => $campo) {
+
                             if ($key != "") {
                                 //si tiene datos pregunto el tipo para pasarle el correcto
                                 if ($tipos[$key] == 'numeric') {
@@ -69,7 +73,13 @@ class CrmService
                                     if (isset($datoTmp) and is_numeric($datoTmp)) {
                                         $datosAEnviar .= "&" . $campo . "=" . $datoTmp;
                                     } else {
-                                        $datosAEnviar .= "&" . $campo . "=" . (int)"1";
+                                        if (isset($requeridos[$key]) and $requeridos[$key] == 1) {
+                                            //si no esta vacio y es requerido cancelo el leads
+                                            $estadoDatos = false;
+                                            break;
+                                        } else {
+                                            $datosAEnviar .= "&" . $campo . "=" . (int)"1";
+                                        }
                                     }
                                 } else if ($tipos[$key] == 'time_unix') {
                                     $datosAEnviar .= "&" . $campo . "=" . strtotime($dato[$key]);
@@ -77,26 +87,42 @@ class CrmService
                                     $datosAEnviar .= "&" . $campo . "=" . urlencode($dato[$key]);
                                 }
                             } else if (isset($requeridos[$key]) and $requeridos[$key] == 1) {
-                                //si no tiene datos y es requerido pregunto el tipo para asignarle
-                                if ($tipos[$key] == 'numeric') {
-                                    $datosAEnviar .= "&" . $campo . "=" . (int)"1";
-                                } else {
-                                    $datosAEnviar .= "&" . $campo . "=null";
-                                }
+                                //si no tiene datos y es requerido cancelo el leads
+                                $estadoDatos = false;
+                                break;
                             } else {
                                 //sino tiene datos y no es requerido envio null
                                 $datosAEnviar .= "&" . $campo . "=null";
                             }
                         }
-                        $response = $this->sendDatos($datosAEnviar);
-                        if ($response->resultado->estado == 1) {
+
+                        if (!$estadoDatos) {
                             $enviado = new FormularioEnviadoXServicio();
                             $enviado->formulario_id = $dato['formulario_id'];
                             $enviado->servicio_crm_id = $this->servicio->id;
                             $enviado->registro_id = $dato['id'];
+                            $enviado->estado_id = 3;
                             $enviado->save();
                         } else {
-                            echo " no ingresa " . $dato['id'] . " formulario " . $dato['formulario_id'];
+                            $response = $this->sendDatos($datosAEnviar);
+                            if ($response->resultado->estado == 1) {
+                                $enviado = new FormularioEnviadoXServicio();
+                                $enviado->formulario_id = $dato['formulario_id'];
+                                $enviado->servicio_crm_id = $this->servicio->id;
+                                $enviado->registro_id = $dato['id'];
+                                $enviado->estado_id = 1; //enviado
+                                $enviado->save();
+                            } elseif ($response->resultado->estado == 3) {
+                                $enviado = new FormularioEnviadoXServicio();
+                                $enviado->formulario_id = $dato['formulario_id'];
+                                $enviado->servicio_crm_id = $this->servicio->id;
+                                $enviado->registro_id = $dato['id'];
+                                $enviado->estado_id = 2; //rechazado
+                                $enviado->save();
+                            } else {
+                                echo " reboto por problema en CRM " . $dato['id'] . " formulario " . $dato['formulario_id'] . chr(10) . chr(13);
+                            }
+
                         }
 
                     }
@@ -106,6 +132,7 @@ class CrmService
         }
     }
 
+2
 
     private function sendDatos($data)
     {
@@ -117,6 +144,19 @@ class CrmService
             print "Error" . $e;
             exit;
         }
+    }
+
+    //ejecuta url como file_get_contents
+    //no se esta usando
+    private function getRemoteFile($url, $timeout = 10)
+    {
+        $ch = curl_init();
+        curl_setopt($ch, CURLOPT_URL, $url);
+        curl_setopt($ch, CURLOPT_RETURNTRANSFER, 1);
+        curl_setopt($ch, CURLOPT_CONNECTTIMEOUT, $timeout);
+        $file_contents = curl_exec($ch);
+        curl_close($ch);
+        return ($file_contents) ? $file_contents : FALSE;
     }
 
 

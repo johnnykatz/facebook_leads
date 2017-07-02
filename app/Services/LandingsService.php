@@ -4,6 +4,7 @@
 namespace App\Services;
 
 use App\Models\Admin\Landing;
+use App\Models\Admin\LandingsEnviadosXServicio;
 use App\Models\Admin\ServicioCrm;
 use App\Models\Admin\ServiciosCrmsXLanding;
 use App\Providers\FuncionesProvider;
@@ -100,7 +101,113 @@ class LandingsService
 
     public function enviarDatos()
     {
+	    $serviciosCrmsXLandings = ServiciosCrmsXLanding::where('servicios_crm_id', $this->servicio->id)->get();
 
+	    if (count($serviciosCrmsXLandings) > 0) {
+		    foreach ( $serviciosCrmsXLandings as $serviciosCrmsXLanding ) {
+
+			    $landing = $serviciosCrmsXLanding->landing;
+
+			    if ($landing->activo == false) {
+				    continue;
+			    }
+
+			    $campos = DB::table('campos_servicios_crms as c')
+			                ->join('landings_campos_servicios as a', 'a.campos_servicios_crm_id', '=', 'c.id')
+			                ->where('c.servicio_crm_id', '=', $this->servicio->id)
+			                ->where('a.landing_id', '=', $landing->id)
+			                ->where('c.estado', true)
+			                ->select('c.nombre as campo_crm', 'a.campo_formulario', 'c.requerido', 'c.tipo', 'codifica')
+			                ->get();
+
+			    $estructura = array();
+			    $requeridos = array();
+
+			    foreach ($campos as $campo) {
+				    $estructura[$campo->campo_formulario] = $campo->campo_crm;
+				    $requeridos[$campo->campo_formulario] = $campo->requerido;
+				    $tipos[$campo->campo_formulario] = $campo->tipo;
+				    $codifica[$campo->campo_formulario] = $campo->codifica;
+			    }
+
+			    $datosFormulario = DB::select('SELECT form.*
+                          FROM ' . $landing->db_name . ' as form
+                          LEFT JOIN landings_enviados_x_servicios as fe on fe.registro_id=form.id
+                         where fe.registro_id is null');
+
+			    if (count($datosFormulario) > 0) {
+				    foreach ($datosFormulario as $dato) {
+					    $datosAEnviar = null;
+					    $estadoDatos = true;
+					    $dato = (array)$dato;
+
+					    foreach ($estructura as $key => $campo) {
+
+						    if ($key != "") {
+							    //si tiene datos pregunto el tipo para pasarle el correcto
+							    if ($tipos[$key] == 'numeric') {
+								    $datoTmp = preg_replace(sprintf('~[^%s]++~i', '0-9'), '', $dato[$key]);
+								    if (isset($datoTmp) and is_numeric($datoTmp)) {
+									    $datosAEnviar .= "&" . $campo . "=" . $datoTmp;
+								    } else {
+									    if (isset($requeridos[$key]) and $requeridos[$key] == 1) {
+										    //si no esta vacio y es requerido cancelo el leads
+										    $estadoDatos = false;
+										    break;
+									    } else {
+										    $datosAEnviar .= "&" . $campo . "=" . (int)"1";
+									    }
+								    }
+							    } else if ($tipos[$key] == 'time_unix') {
+								    $datosAEnviar .= "&" . $campo . "=" . strtotime($dato[$key]);
+							    } else {
+								    $datosAEnviar .= "&" . $campo . "=" . urlencode($dato[$key]);
+							    }
+						    } else if (isset($requeridos[$key]) and $requeridos[$key] == 1) {
+							    //si no tiene datos y es requerido cancelo el leads
+							    $estadoDatos = false;
+							    break;
+						    } else {
+							    //sino tiene datos y no es requerido envio null
+							    $datosAEnviar .= "&" . $campo . "=null";
+						    }
+					    }
+
+					    if (!$estadoDatos) {
+						    $enviado = new LandingsEnviadosXServicio();
+						    $enviado->landing_id = $dato['landing_id'];
+						    $enviado->servicios_crm_id = $this->servicio->id;
+						    $enviado->registro_id = $dato['id'];
+						    $enviado->estados_envio_id = 3;
+						    $enviado->save();
+					    } else {
+						    $response = $this->sendDatos($datosAEnviar);
+
+						    if (false) {
+							    $enviado = new LandingsEnviadosXServicio();
+							    $enviado->landing_id = $dato['landing_id'];
+							    $enviado->servicios_crm_id = $this->servicio->id;
+							    $enviado->registro_id = $dato['id'];
+							    $enviado->estados_envio_id = 1; //enviado
+							    $enviado->save();
+						    } elseif ($response->resultado->estado == 3) {
+							    $enviado = new LandingsEnviadosXServicio();
+							    $enviado->landing_id = $dato['landing_id'];
+							    $enviado->servicios_crm_id = $this->servicio->id;
+							    $enviado->registro_id = $dato['id'];
+							    $enviado->estados_envio_id = 2; //rechazado
+							    $enviado->save();
+						    } else {
+							    echo " reboto por problema en CRM " . $dato['id'] . " landing " . $dato['landing_id'] . chr(10) . chr(13);
+						    }
+
+					    }
+
+				    }
+			    }
+
+		    }
+	    }
     }
 
     private function sendDatos($data)

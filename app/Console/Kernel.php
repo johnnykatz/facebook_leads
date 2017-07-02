@@ -18,6 +18,7 @@ class Kernel extends ConsoleKernel
         Commands\SincronizarLeads::class,
         Commands\SincronizarEstructura::class,
         Commands\SincronizarCrm::class,
+        Commands\SincronizarLandings::class,
 
         // Commands\Inspire::class,
     ];

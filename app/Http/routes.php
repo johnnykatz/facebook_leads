@@ -193,3 +193,55 @@ Route::patch('admin/estadoEnvios/{estadoEnvios}', ['as'=> 'admin.estadoEnvios.up
 Route::delete('admin/estadoEnvios/{estadoEnvios}', ['as'=> 'admin.estadoEnvios.destroy', 'uses' => 'Admin\EstadoEnvioController@destroy']);
 Route::get('admin/estadoEnvios/{estadoEnvios}', ['as'=> 'admin.estadoEnvios.show', 'uses' => 'Admin\EstadoEnvioController@show']);
 Route::get('admin/estadoEnvios/{estadoEnvios}/edit', ['as'=> 'admin.estadoEnvios.edit', 'uses' => 'Admin\EstadoEnvioController@edit']);
+
+
+Route::get('admin/landings', ['as'=> 'admin.landings.index', 'uses' => 'Admin\LandingController@index']);
+Route::post('admin/landings', ['as'=> 'admin.landings.store', 'uses' => 'Admin\LandingController@store']);
+Route::get('admin/landings/create', ['as'=> 'admin.landings.create', 'uses' => 'Admin\LandingController@create']);
+Route::put('admin/landings/{landings}', ['as'=> 'admin.landings.update', 'uses' => 'Admin\LandingController@update']);
+Route::patch('admin/landings/{landings}', ['as'=> 'admin.landings.update', 'uses' => 'Admin\LandingController@update']);
+Route::delete('admin/landings/{landings}', ['as'=> 'admin.landings.destroy', 'uses' => 'Admin\LandingController@destroy']);
+Route::get('admin/landings/{landings}', ['as'=> 'admin.landings.show', 'uses' => 'Admin\LandingController@show']);
+Route::get('admin/landings/{landings}/edit', ['as'=> 'admin.landings.edit', 'uses' => 'Admin\LandingController@edit']);
+
+Route::get('admin/landings/{landings}/listar_datos', ['as'=> 'admin.landings.listar_datos', 'uses' => 'Admin\LandingController@listarDatos', 'middleware' => ['auth']]);
+
+
+Route::get('admin/serviciosCrmsXLandings', ['as'=> 'admin.serviciosCrmsXLandings.index', 'uses' => 'Admin\ServiciosCrmsXLandingController@index']);
+Route::post('admin/serviciosCrmsXLandings', ['as'=> 'admin.serviciosCrmsXLandings.store', 'uses' => 'Admin\ServiciosCrmsXLandingController@store']);
+Route::get('admin/serviciosCrmsXLandings/create', ['as'=> 'admin.serviciosCrmsXLandings.create', 'uses' => 'Admin\ServiciosCrmsXLandingController@create']);
+Route::put('admin/serviciosCrmsXLandings/{serviciosCrmsXLandings}', ['as'=> 'admin.serviciosCrmsXLandings.update', 'uses' => 'Admin\ServiciosCrmsXLandingController@update']);
+Route::patch('admin/serviciosCrmsXLandings/{serviciosCrmsXLandings}', ['as'=> 'admin.serviciosCrmsXLandings.update', 'uses' => 'Admin\ServiciosCrmsXLandingController@update']);
+Route::delete('admin/serviciosCrmsXLandings/{serviciosCrmsXLandings}', ['as'=> 'admin.serviciosCrmsXLandings.destroy', 'uses' => 'Admin\ServiciosCrmsXLandingController@destroy']);
+Route::get('admin/serviciosCrmsXLandings/{serviciosCrmsXLandings}', ['as'=> 'admin.serviciosCrmsXLandings.show', 'uses' => 'Admin\ServiciosCrmsXLandingController@show']);
+Route::get('admin/serviciosCrmsXLandings/{serviciosCrmsXLandings}/edit', ['as'=> 'admin.serviciosCrmsXLandings.edit', 'uses' => 'Admin\ServiciosCrmsXLandingController@edit']);
+
+
+Route::get('admin/serviciosCrmsXLandings', ['as'=> 'admin.serviciosCrmsXLandings.index', 'uses' => 'Admin\ServiciosCrmsXLandingController@index']);
+Route::post('admin/serviciosCrmsXLandings', ['as'=> 'admin.serviciosCrmsXLandings.store', 'uses' => 'Admin\ServiciosCrmsXLandingController@store']);
+Route::get('admin/serviciosCrmsXLandings/create/{landing_id}', ['as'=> 'admin.serviciosCrmsXLandings.create', 'uses' => 'Admin\ServiciosCrmsXLandingController@create']);
+Route::put('admin/serviciosCrmsXLandings/{serviciosCrmsXLandings}', ['as'=> 'admin.serviciosCrmsXLandings.update', 'uses' => 'Admin\ServiciosCrmsXLandingController@update']);
+Route::patch('admin/serviciosCrmsXLandings/{serviciosCrmsXLandings}', ['as'=> 'admin.serviciosCrmsXLandings.update', 'uses' => 'Admin\ServiciosCrmsXLandingController@update']);
+Route::delete('admin/serviciosCrmsXLandings/{serviciosCrmsXLandings}', ['as'=> 'admin.serviciosCrmsXLandings.destroy', 'uses' => 'Admin\ServiciosCrmsXLandingController@destroy']);
+Route::get('admin/serviciosCrmsXLandings/{serviciosCrmsXLandings}', ['as'=> 'admin.serviciosCrmsXLandings.show', 'uses' => 'Admin\ServiciosCrmsXLandingController@show']);
+Route::get('admin/serviciosCrmsXLandings/{serviciosCrmsXLandings}/edit', ['as'=> 'admin.serviciosCrmsXLandings.edit', 'uses' => 'Admin\ServiciosCrmsXLandingController@edit']);
+
+
+Route::get('admin/landingsCamposServicios', ['as'=> 'admin.landingsCamposServicios.index', 'uses' => 'Admin\LandingsCamposServicioController@index']);
+Route::post('admin/landingsCamposServicios', ['as'=> 'admin.landingsCamposServicios.store', 'uses' => 'Admin\LandingsCamposServicioController@store']);
+Route::get('admin/landingsCamposServicios/create', ['as'=> 'admin.landingsCamposServicios.create', 'uses' => 'Admin\LandingsCamposServicioController@create']);
+Route::put('admin/landingsCamposServicios/{landingsCamposServicios}', ['as'=> 'admin.landingsCamposServicios.update', 'uses' => 'Admin\LandingsCamposServicioController@update']);
+Route::patch('admin/landingsCamposServicios/{landingsCamposServicios}', ['as'=> 'admin.landingsCamposServicios.update', 'uses' => 'Admin\LandingsCamposServicioController@update']);
+Route::delete('admin/landingsCamposServicios/{landingsCamposServicios}', ['as'=> 'admin.landingsCamposServicios.destroy', 'uses' => 'Admin\LandingsCamposServicioController@destroy']);
+Route::get('admin/landingsCamposServicios/{landingsCamposServicios}', ['as'=> 'admin.landingsCamposServicios.show', 'uses' => 'Admin\LandingsCamposServicioController@show']);
+Route::get('admin/landingsCamposServicios/{landingsCamposServicios}/edit', ['as'=> 'admin.landingsCamposServicios.edit', 'uses' => 'Admin\LandingsCamposServicioController@edit']);
+
+
+Route::get('admin/landingsEnviadosXServicios', ['as'=> 'admin.landingsEnviadosXServicios.index', 'uses' => 'Admin\LandingsEnviadosXServicioController@index']);
+Route::post('admin/landingsEnviadosXServicios', ['as'=> 'admin.landingsEnviadosXServicios.store', 'uses' => 'Admin\LandingsEnviadosXServicioController@store']);
+Route::get('admin/landingsEnviadosXServicios/create', ['as'=> 'admin.landingsEnviadosXServicios.create', 'uses' => 'Admin\LandingsEnviadosXServicioController@create']);
+Route::put('admin/landingsEnviadosXServicios/{landingsEnviadosXServicios}', ['as'=> 'admin.landingsEnviadosXServicios.update', 'uses' => 'Admin\LandingsEnviadosXServicioController@update']);
+Route::patch('admin/landingsEnviadosXServicios/{landingsEnviadosXServicios}', ['as'=> 'admin.landingsEnviadosXServicios.update', 'uses' => 'Admin\LandingsEnviadosXServicioController@update']);
+Route::delete('admin/landingsEnviadosXServicios/{landingsEnviadosXServicios}', ['as'=> 'admin.landingsEnviadosXServicios.destroy', 'uses' => 'Admin\LandingsEnviadosXServicioController@destroy']);
+Route::get('admin/landingsEnviadosXServicios/{landingsEnviadosXServicios}', ['as'=> 'admin.landingsEnviadosXServicios.show', 'uses' => 'Admin\LandingsEnviadosXServicioController@show']);
+Route::get('admin/landingsEnviadosXServicios/{landingsEnviadosXServicios}/edit', ['as'=> 'admin.landingsEnviadosXServicios.edit', 'uses' => 'Admin\LandingsEnviadosXServicioController@edit']);

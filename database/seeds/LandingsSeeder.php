@@ -164,6 +164,78 @@ class LandingsSeeder extends Seeder
 				        'vehiculo',
 				        'estado'
 		        ]
+	        ],
+	        [
+	        	'nombre'    => 'Interesados',
+		        'endpoint'  => 'http://webprojects.rocks/clientes/massdigital/dercontador2017/wordpress/wp-content/plugins/exports-and-reports/api.php?report=3&full=1&action=json&token=5956cef64daa1&export_type=json',
+		        'db_name'   => 'landing_interesados',
+		        'landing_identificador' => 'id',
+		        'campo_fecha' => 'datetime',
+		        'activo'    => true,
+		        'campos'    => [
+		        	    'Nombre_de_formulario',
+			            'nombre',
+				        'email',
+				        'celular',
+				        'id_vehiculo',
+				        'vehiculo',
+				        'color_carro',
+				        'acepto_tyc',
+				        'acepto_mar',
+				        'meta_value'
+		        ]
+	        ],
+	        [
+	        	'nombre'    => 'PQR',
+		        'endpoint'  => 'http://webprojects.rocks/clientes/massdigital/dercontador2017/wordpress/wp-content/plugins/exports-and-reports/api.php?report=8&full=1&action=json&token=5956cef64daa1&export_type=json',
+		        'db_name'   => 'landing_pqr',
+		        'landing_identificador' => 'id_pqr',
+		        'campo_fecha' => 'fecha',
+		        'activo'    => true,
+		        'campos'    => [
+		        	    'Nombre_de_formulario',
+			            'nombre',
+				        'email',
+				        'nro_identificacion',
+				        'ciudad',
+				        'direccion',
+				        'celular',
+				        'marca',
+				        'linea',
+				        'modelo',
+				        'placa',
+				        'vin',
+				        'kms',
+				        'taller',
+				        'persona_contactada',
+				        'mensaje',
+				        'dia',
+				        'mes',
+				        'ano',
+				        'acepto_tyc',
+				        'acepto_mar'
+		        ]
+	        ],
+	        [
+	        	'nombre'    => 'Contacto',
+		        'endpoint'  => 'http://webprojects.rocks/clientes/massdigital/dercontador2017/wordpress/wp-content/plugins/exports-and-reports/api.php?report=9&full=1&action=json&token=5956cef64daa1&export_type=json',
+		        'db_name'   => 'landing_contacto',
+		        'landing_identificador' => 'id_contact',
+		        'campo_fecha' => 'fecha',
+		        'activo'    => true,
+		        'campos'    => [
+			        'Nombre_de_formulario',
+			        'nombre',
+			        'email',
+			        'nro_identificacion',
+			        'ciudad',
+			        'direccion',
+			        'celular',
+			        'asunto',
+			        'mensaje',
+			        'acepto_tyc',
+			        'acepto_mar',
+		        ]
 	        ]
 	    ];
 
@@ -190,6 +262,8 @@ class LandingsSeeder extends Seeder
 				    $table->string('id');
 				    $table->string('landing_identificador');
 				    $table->string('fecha_creacion');
+				    $table->boolean('habeas')->default(true);
+				    $table->boolean('terminos')->default(true);
 
 				    foreach ($campos as $campo) {
 					    $table->string(\App\Providers\FuncionesProvider::limpiaCadena($campo));

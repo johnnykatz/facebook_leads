@@ -16,38 +16,128 @@ class LandingsSeeder extends Seeder
 	    $servicio = [
 	    	'nombre' => 'Landing Insert',
 		    'slug' => 'landing_insert',
-		    'datos' => '#',
+		    'datos' => 'insertRegistroDc.php?cliente=DERCONTADOR&token=5393aa431688ad3b008ee4b27f535325',
 		    'estado' => 1,
 		    'crm_id' => 1,
 		    'campos' => [
 		    	[
-		    		'nombre'    => 'nombre',
+		    		'nombre'    => 'Nombre',
 				    'requerido' => true,
 				    'tipo'      => 'string',
 				    'estado'    => 1
 			    ],
 			    [
-				    'nombre'    => 'email',
-				    'requerido' => true,
-				    'tipo'      => 'string',
-				    'estado'    => 1
-			    ],
-			    [
-				    'nombre'    => 'id_vehiculo',
+				    'nombre'    => 'Cedula',
 				    'requerido' => false,
 				    'tipo'      => 'string',
 				    'estado'    => 1
 			    ],
 			    [
-				    'nombre'    => 'vehiculo',
+				    'nombre'    => 'Celular',
+				    'requerido' => true,
+				    'tipo'      => 'numeric',
+				    'estado'    => 1
+			    ],
+			    [
+				    'nombre'    => 'Email',
 				    'requerido' => true,
 				    'tipo'      => 'string',
 				    'estado'    => 1
 			    ],
 			    [
-				    'nombre'    => 'celular',
+				    'nombre'    => 'Nombre_de_formulario',
 				    'requerido' => true,
 				    'tipo'      => 'string',
+				    'estado'    => 1
+			    ],
+			    [
+				    'nombre'    => 'Descripcion_carro',
+				    'requerido' => false,
+				    'tipo'      => 'string',
+				    'estado'    => 1
+			    ],
+			    [
+				    'nombre'    => 'Precio_lista',
+				    'requerido' => false,
+				    'tipo'      => 'string',
+				    'estado'    => 1
+			    ],
+			    [
+				    'nombre'    => 'Descuento',
+				    'requerido' => false,
+				    'tipo'      => 'string',
+				    'estado'    => 1
+			    ],
+			    [
+				    'nombre'    => 'Precio_Dercontador',
+				    'requerido' => false,
+				    'tipo'      => 'string',
+				    'estado'    => 1
+			    ],
+			    [
+				    'nombre'    => 'Marca',
+				    'requerido' => false,
+				    'tipo'      => 'string',
+				    'estado'    => 1
+			    ],
+			    [
+				    'nombre'    => 'Linea',
+				    'requerido' => false,
+				    'tipo'      => 'string',
+				    'estado'    => 1
+			    ],
+			    [
+				    'nombre'    => 'Modelo',
+				    'requerido' => false,
+				    'tipo'      => 'string',
+				    'estado'    => 1
+			    ],
+			    [
+				    'nombre'    => 'Fecha_de_separacion',
+				    'requerido' => false,
+				    'tipo'      => 'string',
+				    'estado'    => 1
+			    ],
+			    [
+				    'nombre'    => 'Direccion',
+				    'requerido' => false,
+				    'tipo'      => 'string',
+				    'estado'    => 1
+			    ],
+			    [
+				    'nombre'    => 'Ciudad',
+				    'requerido' => true,
+				    'tipo'      => 'string',
+				    'estado'    => 1
+			    ],
+			    [
+				    'nombre'    => 'Concesionario',
+				    'requerido' => false,
+				    'tipo'      => 'string',
+				    'estado'    => 1
+			    ],
+			    [
+				    'nombre'    => 'Acepto_terminos_condiciones',
+				    'requerido' => true,
+				    'tipo'      => 'string',
+				    'estado'    => 1
+			    ],
+			    [
+				    'nombre'    => 'Acepto_que_mi_informacion',
+				    'requerido' => true,
+				    'tipo'      => 'string',
+				    'estado'    => 1
+			    ],
+			    [
+				    'nombre'    => 'registroId',
+				    'requerido' => true,
+				    'tipo'      => 'string',
+				    'estado'    => 1
+			    ],
+			    [
+				    'nombre'    => 'timestamp',
+				    'requerido' => true,
+				    'tipo'      => 'time_unix',
 				    'estado'    => 1
 			    ]
 		    ]
@@ -55,42 +145,24 @@ class LandingsSeeder extends Seeder
 
 	    $landings = [
 	        [
-	        	'nombre'    => 'Interesados',
-		        'endpoint'  => 'http://webprojects.rocks/clientes/massdigital/dercontador2017/wordpress/wp-content/plugins/exports-and-reports/api.php?report=3&full=1&action=json&token=5956cef64daa1&export_type=json',
-		        'db_name'   => 'landing_interesados',
-		        'landing_identificador' => 'id',
+	        	'nombre'    => 'Log de pagos',
+		        'endpoint'  => 'http://webprojects.rocks/clientes/massdigital/dercontador2017/wordpress/wp-content/plugins/exports-and-reports/api.php?report=7&full=1&action=json&token=5956cef64daa1&export_type=json',
+		        'db_name'   => 'landing_log_de_pagos',
+		        'landing_identificador' => 'referencia',
+		        'campo_fecha' => 'fecha_creacion',
 		        'activo'    => true,
 		        'campos'    => [
-			        [
-				        'nombre'    => 'nombre',
-				        'requerido' => true,
-				        'tipo'      => 'string',
-				        'estado'    => 1
-			        ],
-			        [
-				        'nombre'    => 'email',
-				        'requerido' => true,
-				        'tipo'      => 'string',
-				        'estado'    => 1
-			        ],
-			        [
-				        'nombre'    => 'id_vehiculo',
-				        'requerido' => false,
-				        'tipo'      => 'string',
-				        'estado'    => 1
-			        ],
-			        [
-				        'nombre'    => 'vehiculo',
-				        'requerido' => true,
-				        'tipo'      => 'string',
-				        'estado'    => 1
-			        ],
-			        [
-				        'nombre'    => 'celular',
-				        'requerido' => true,
-				        'tipo'      => 'string',
-				        'estado'    => 1
-			        ]
+		        	    'Nombre_de_formulario',
+			            'nombre',
+				        'telefono',
+				        'email',
+				        'direccion',
+				        'cedula',
+				        'ciudad',
+				        'agencia',
+				        'meta_value',
+				        'vehiculo',
+				        'estado'
 		        ]
 	        ]
 	    ];
@@ -116,11 +188,11 @@ class LandingsSeeder extends Seeder
 			    // Crear tabla para el landing
 			    \Illuminate\Support\Facades\Schema::create($landing->db_name, function (\Illuminate\Database\Schema\Blueprint $table) use ($campos) {
 				    $table->string('id');
-				    $table->string('landing_id');
 				    $table->string('landing_identificador');
+				    $table->string('fecha_creacion');
 
 				    foreach ($campos as $campo) {
-					    $table->string(\App\Providers\FuncionesProvider::limpiaCadena($campo['nombre']));
+					    $table->string(\App\Providers\FuncionesProvider::limpiaCadena($campo));
 				    }
 
 				    $table->timestamps();

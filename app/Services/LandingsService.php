@@ -65,16 +65,19 @@ class LandingsService
 	                    $values[] = uniqid();
 
 	                    $fields[] = 'landing_identificador';
-	                    $values[] = $data['id'];
+	                    $values[] = $data[$landing->landing_identificador];
+
+	                    $fields[] = 'Nombredeformulario';
+	                    $values[] = $landing->nombre;
+
+	                    $fields[] = 'fecha_creacion';
+	                    $values[] = $data[$landing->campo_fecha];
 
 	                    $fields[] = 'created_at';
 	                    $values[] = date("Y-m-d H:i:s");
 
 	                    $fields[] = 'updated_at';
 	                    $values[] = date("Y-m-d H:i:s");
-
-	                    $fields[] = 'landing_id';
-	                    $values[] = $landing->id;
 
 	                    foreach (array_except($data, [$landing->landing_identificador]) as $k => $val) {
 	                    	if(in_array(FuncionesProvider::limpiaCadena($k), $arrayCampos)) {
@@ -175,7 +178,7 @@ class LandingsService
 
 					    if (!$estadoDatos) {
 						    $enviado = new LandingsEnviadosXServicio();
-						    $enviado->landing_id = $dato['landing_id'];
+						    $enviado->landing_id = $landing->id;
 						    $enviado->servicios_crm_id = $this->servicio->id;
 						    $enviado->registro_id = $dato['id'];
 						    $enviado->estados_envio_id = 3;
@@ -183,16 +186,16 @@ class LandingsService
 					    } else {
 						    $response = $this->sendDatos($datosAEnviar);
 
-						    if (false) {
+						    if ($response->resultado->estado == 1) {
 							    $enviado = new LandingsEnviadosXServicio();
-							    $enviado->landing_id = $dato['landing_id'];
+							    $enviado->landing_id = $landing->id;
 							    $enviado->servicios_crm_id = $this->servicio->id;
 							    $enviado->registro_id = $dato['id'];
 							    $enviado->estados_envio_id = 1; //enviado
 							    $enviado->save();
 						    } elseif ($response->resultado->estado == 3) {
 							    $enviado = new LandingsEnviadosXServicio();
-							    $enviado->landing_id = $dato['landing_id'];
+							    $enviado->landing_id = $landing->id;
 							    $enviado->servicios_crm_id = $this->servicio->id;
 							    $enviado->registro_id = $dato['id'];
 							    $enviado->estados_envio_id = 2; //rechazado
@@ -213,9 +216,9 @@ class LandingsService
     private function sendDatos($data)
     {
         try {
-            //$url = $this->servicio->crm->endpoint . '/' . $this->servicio->datos . $data;
-            //return json_decode(file_get_contents($url));
-	        return false;
+
+            $url = $this->servicio->crm->endpoint . '/' . $this->servicio->datos . $data;
+            return json_decode(file_get_contents($url));
 
         } catch (Exception $e) {
             print "Error" . $e;

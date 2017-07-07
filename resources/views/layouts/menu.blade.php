@@ -39,9 +39,9 @@
     {{--<a href="{!! route('admin.formularioEnviadoXServicios.index') !!}"><i class="fa fa-edit"></i><span>FormularioEnviadoXServicios</span></a>--}}
 {{--</li>--}}
 
-<li class="{{ Request::is('estadoEnvios*') ? 'active' : '' }}">
-    <a href="{!! route('admin.estadoEnvios.index') !!}"><i class="fa fa-edit"></i><span>EstadoEnvios</span></a>
-</li>
+{{--<li class="{{ Request::is('estadoEnvios*') ? 'active' : '' }}">--}}
+    {{--<a href="{!! route('admin.estadoEnvios.index') !!}"><i class="fa fa-edit"></i><span>EstadoEnvios</span></a>--}}
+{{--</li>--}}
 
 <li class="{{ Request::is('landings*') ? 'active' : '' }}">
     <a href="{!! route('admin.landings.index') !!}"><i class="fa fa-edit"></i><span>Landings</span></a>

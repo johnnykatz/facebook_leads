@@ -161,11 +161,12 @@ class FacebookProvider
                     if ($e->getCode() == 190) {
                         $mensaje = "Hubo un error al conectarse con Facebook, debe actualizar el token desde el administrador del sistema.";
                     } else {
-                        $mensaje = "Hubo un error al conectarse con facebook, si continua recibiendo este mensaje en los proximos 4 minutos, comuniquese con el administrador del sistema.";
+                        $mensaje = "Hubo un error al conectarse con facebook, si continua recibiendo este mensaje en los proximos 4 minutos, comuniquese con el administrador del sistema. Formulario = " . $formulario->form_id;
                     }
                     $this->sendMail($mensaje);
                     echo " No se pudo conectar a Facebook" . chr(10) . chr(13);
-                    exit;
+                    $leads = null;
+//                    exit;
                 }
 
 

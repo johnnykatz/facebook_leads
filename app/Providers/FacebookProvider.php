@@ -166,7 +166,7 @@ class FacebookProvider
                     $this->sendMail($mensaje);
                     echo " No se pudo conectar a Facebook" . chr(10) . chr(13);
                     $leads = null;
-//                    exit;
+                    exit;
                 }
 
 

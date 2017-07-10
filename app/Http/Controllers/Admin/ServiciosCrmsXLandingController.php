@@ -71,7 +71,7 @@ class ServiciosCrmsXLandingController extends InfyOmBaseController
 	    $landing = Landing::find($landing_id);
 
 	    if(isset($servicio_crm_id))
-	    	$data['landingServicio'] = ServiciosCrmsXLanding::find($servicio_crm_id)->servicioCrm;
+	    	$data['landingServicio'] = ServicioCrm::find($servicio_crm_id);
 
 	    $campos = DB::select('SELECT COLUMN_NAME
                           FROM INFORMATION_SCHEMA.COLUMNS

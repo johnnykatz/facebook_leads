@@ -212,7 +212,13 @@ class LandingsService
 							    } else if ($tipos[$key] == 'time_unix') {
 								    $datosAEnviar .= "&" . $campo . "=" . strtotime($dato[$key]);
 							    } else {
-								    $datosAEnviar .= "&" . $campo . "=" . urlencode($dato[$key]);
+								    if (isset($requeridos[$key]) and $requeridos[$key] == 1 and $dato[$key] == "") {
+									    //si esta vacio y es requerido cancelo
+									    $estadoDatos = false;
+									    break;
+								    } else {
+								        $datosAEnviar .= "&" . $campo . "=" . urlencode($dato[$key]);
+								    }
 							    }
 						    } else if (isset($requeridos[$key]) and $requeridos[$key] == 1) {
 							    //si no tiene datos y es requerido cancelo el leads

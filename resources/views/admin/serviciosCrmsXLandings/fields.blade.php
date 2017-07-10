@@ -1,20 +1,12 @@
 {!! Form::text('landing_id', $landing_id, ['class' => 'form-control hidden']) !!}
-{!! Form::text('servicios_crm_id', $servicio->id, ['class' => 'form-control hidden']) !!}
-
-@foreach($servicio->camposServiciosCrms as $campo)
-    <div class="form-group col-sm-6">
-        {!! Form::label($campo->nombre, $campo->nombre . ':') !!}
-        {!! Form::select($campo->nombre, $campos,null,['class'=>'form-control','placeholder'=>'seleccione...']) !!}
-    </div>
-@endforeach
 
 <div class="form-group col-sm-12">
-    {!! Form::label('eliminar', 'Eliminar sincronizacion:') !!}
-    {!! Form::checkbox('eliminar')!!}
+    {!! Form::label('servicios_crm_id', 'Servicio:') !!}
+    {!! Form::select('servicios_crm_id', ['' => ''] + $servicios, $landingServicio ? $landingServicio->id : null, ['class'=>'form-control','required', 'data-url' => route('admin.serviciosCrmsXLandings.recargarCampos', ['landing_id' => $landing_id, 'servicio_crm_id' => ''])]) !!}
 </div>
 
-<!-- Submit Field -->
-<div class="form-group col-sm-12">
-    {!! Form::submit('Guardar', ['class' => 'btn btn-primary']) !!}
-    <a href="{!! route('admin.serviciosCrmsXLandings.index') !!}" class="btn btn-default">Cancelar</a>
+<div id="campos-servicio">
+    @if(isset($landingServicio))
+        @include('admin.serviciosCrmsXLandings.campos_x_servicio')
+    @endif
 </div>

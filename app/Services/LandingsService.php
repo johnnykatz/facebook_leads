@@ -23,6 +23,51 @@ class LandingsService
             ->where('estado', true)->first();
     }
 
+	public function sincronizarEstructura()
+	{
+
+		$landings = Landing::where('activo', true)->where('con_estructura', false)->get();
+
+		foreach ($landings as $landing) {
+
+			$url = $landing->endpoint;
+			$response = json_decode(file_get_contents($url), true);
+
+			if(count($response['data']) > 0) {
+				$record = $response['data'][0];
+
+				\Illuminate\Support\Facades\DB::transaction(function() use ($landing, $record) {
+					$campos = array_diff(array_keys($record), [$landing->landing_identificador, $landing->campo_fecha]);
+
+					$dbName = 'landing_' . uniqid();
+
+					// Crear tabla para el landing
+					\Illuminate\Support\Facades\Schema::create($dbName, function (\Illuminate\Database\Schema\Blueprint $table) use ($campos) {
+						$table->string('id');
+						$table->string('landing_identificador');
+						$table->string('fecha_creacion');
+						$table->string('Nombredeformulario');
+						$table->boolean('habeas')->default(true);
+						$table->boolean('terminos')->default(true);
+
+						foreach ($campos as $campo) {
+							$table->string(\App\Providers\FuncionesProvider::limpiaCadena($campo));
+						}
+
+						$table->timestamps();
+					});
+
+					// Actulizar el landing
+					$landing->db_name = $dbName;
+					$landing->con_estructura = true;
+					$landing->save();
+
+				});
+			}
+		}
+
+	}
+
     public function obtenerDatos()
     {
 
@@ -33,68 +78,71 @@ class LandingsService
 
 			    $landing = $serviciosCrmsXLanding->landing;
 
-			    $campos = DB::select('SELECT COLUMN_NAME
+			    if($landing->con_estructura) {
+
+				    $campos      = DB::select( 'SELECT COLUMN_NAME
                           FROM INFORMATION_SCHEMA.COLUMNS
-                          WHERE table_name ="' . $landing->db_name . '"');
-			    $arrayCampos = array();
+                          WHERE table_name ="' . $landing->db_name . '"' );
+				    $arrayCampos = array();
 
-			    foreach ($campos as $campo) {
-				    $arrayCampos[$campo->COLUMN_NAME] = $campo->COLUMN_NAME;
-			    }
+				    foreach ( $campos as $campo ) {
+					    $arrayCampos[ $campo->COLUMN_NAME ] = $campo->COLUMN_NAME;
+				    }
 
-			    echo 'Landing -> ' . $landing->nombre . "\n";
+				    echo 'Landing -> ' . $landing->nombre . "\n";
 
-			    $url = $landing->endpoint;
-			    $response = json_decode(file_get_contents($url), true);
+				    $url      = $landing->endpoint;
+				    $response = json_decode( file_get_contents( $url ), TRUE );
 
-			    if(count($response['data']) > 0) {
-				    foreach ( $response['data'] as $data ) {
+				    if ( count( $response['data'] ) > 0 ) {
+					    foreach ( $response['data'] as $data ) {
 
-	                      $landing_tmp = DB::table($landing->db_name)
-	                        ->select('id')
-	                        ->where('landing_identificador', $data[$landing->landing_identificador])
-	                        ->first();
-	                    if ($landing_tmp) {
-	                        continue;
-	                    }
+						    $landing_tmp = DB::table( $landing->db_name )
+						                     ->select( 'id' )
+						                     ->where( 'landing_identificador', $data[ $landing->landing_identificador ] )
+						                     ->first();
+						    if ( $landing_tmp ) {
+							    continue;
+						    }
 
-                        $fields = array();
-	                    $values = array();
+						    $fields = array();
+						    $values = array();
 
-	                    $fields[] = 'id';
-	                    $values[] = uniqid();
+						    $fields[] = 'id';
+						    $values[] = uniqid();
 
-	                    $fields[] = 'landing_identificador';
-	                    $values[] = $data[$landing->landing_identificador];
+						    $fields[] = 'landing_identificador';
+						    $values[] = $data[ $landing->landing_identificador ];
 
-	                    $fields[] = 'Nombredeformulario';
-	                    $values[] = $landing->nombre;
+						    $fields[] = 'Nombredeformulario';
+						    $values[] = $landing->nombre;
 
-	                    $fields[] = 'fecha_creacion';
-	                    $values[] = $data[$landing->campo_fecha];
+						    $fields[] = 'fecha_creacion';
+						    $values[] = $data[ $landing->campo_fecha ];
 
-	                    $fields[] = 'created_at';
-	                    $values[] = date("Y-m-d H:i:s");
+						    $fields[] = 'created_at';
+						    $values[] = date( "Y-m-d H:i:s" );
 
-	                    $fields[] = 'updated_at';
-	                    $values[] = date("Y-m-d H:i:s");
+						    $fields[] = 'updated_at';
+						    $values[] = date( "Y-m-d H:i:s" );
 
-	                    foreach (array_except($data, [$landing->landing_identificador]) as $k => $val) {
-	                    	if(in_array(FuncionesProvider::limpiaCadena($k), $arrayCampos)) {
-			                    $fields[] = FuncionesProvider::limpiaCadena( $k );
-			                    $values[] = addslashes( (string) $val );
-		                    }
-	                    }
+						    foreach ( array_except( $data, [ $landing->landing_identificador ] ) as $k => $val ) {
+							    if ( in_array( FuncionesProvider::limpiaCadena( $k ), $arrayCampos ) ) {
+								    $fields[] = FuncionesProvider::limpiaCadena( $k );
+								    $values[] = addslashes( (string) $val );
+							    }
+						    }
 
-	                    $valores = "'" . implode("','", $values) . "'";
+						    $valores = "'" . implode( "','", $values ) . "'";
 
-	                    $sql = DB::insert("insert into " . $landing->db_name . " (" . implode(',', $fields) . ")" . " values (" . $valores . ")");
+						    $sql = DB::insert( "insert into " . $landing->db_name . " (" . implode( ',', $fields ) . ")" . " values (" . $valores . ")" );
 
-					}
+					    }
 
-				    $landing->fecha_sincronizacion = date("Y-m-d H:i:s");
-				    $landing->fecha_ultimo_registro = date("Y-m-d H:i:s");
-	                $landing->save();
+					    $landing->fecha_sincronizacion  = date( "Y-m-d H:i:s" );
+					    $landing->fecha_ultimo_registro = date( "Y-m-d H:i:s" );
+					    $landing->save();
+				    }
 			    }
 		    }
 	    }

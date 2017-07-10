@@ -17,10 +17,11 @@ class Landing extends Model
 
     public $fillable = [
         'nombre',
-        'landing_id',
-        'db_name',
         'fecha_sincronizacion',
         'fecha_ultimo_registro',
+	    'landing_identificador',
+	    'campo_fecha',
+	    'endpoint',
         'activo'
     ];
 
@@ -31,7 +32,6 @@ class Landing extends Model
      */
     protected $casts = [
         'nombre' => 'string',
-        'landing_id' => 'string',
         'db_name' => 'string',
         'fecha_sincronizacion' => 'datetime',
         'fecha_ultimo_registro' => 'datetime',
@@ -45,8 +45,9 @@ class Landing extends Model
      */
     public static $rules = [
         'nombre' => 'required',
-        'landing_id' => 'required',
-        'db_name' => 'required'
+	    'endpoint' => 'required',
+	    'landing_identificador' => 'required',
+	    'campo_fecha' => 'required'
     ];
 
 

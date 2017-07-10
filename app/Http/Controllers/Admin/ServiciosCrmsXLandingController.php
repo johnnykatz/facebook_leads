@@ -8,6 +8,8 @@ use App\Http\Requests\Admin\UpdateServiciosCrmsXLandingRequest;
 use App\Models\Admin\CampoServicioCrm;
 use App\Models\Admin\Landing;
 use App\Models\Admin\LandingsCamposServicio;
+use App\Models\Admin\ServicioCrm;
+use App\Models\Admin\ServiciosCrmsXLanding;
 use App\Repositories\Admin\ServiciosCrmsXLandingRepository;
 use Illuminate\Support\Facades\DB;
 use App\Http\Controllers\AppBaseController as InfyOmBaseController;
@@ -49,22 +51,37 @@ class ServiciosCrmsXLandingController extends InfyOmBaseController
     public function create($landing_id)
     {
 	    $landing = Landing::find($landing_id);
-	    $servicio = $landing->serviciosCrmsXLandings()->first()->servicioCrm;
+	    $landingServicio = $landing->serviciosCrmsXLandings()->first() ? $landing->serviciosCrmsXLandings()->first()->servicioCrm->id : null;
+
+	    $servicios = ServicioCrm::orderBy('nombre', 'ASC')->lists('nombre', 'id')->all();
+
+	    return view('admin.serviciosCrmsXLandings.create', array_merge($this->getCamposXServicio($landing_id, $landingServicio), ['servicios' => $servicios]));
+
+    }
+
+    public function recargarCampos($landing_id, $servicio_crm_id)
+    {
+    	return view('admin.serviciosCrmsXLandings.campos_x_servicio', $this->getCamposXServicio($landing_id, $servicio_crm_id));
+    }
+
+    public function getCamposXServicio($landing_id, $servicio_crm_id)
+    {
+    	$data = ['campos' => array(), 'landing_id' => $landing_id, 'landingServicio' => null];
+
+	    $landing = Landing::find($landing_id);
+
+	    if(isset($servicio_crm_id))
+	    	$data['landingServicio'] = ServiciosCrmsXLanding::find($servicio_crm_id)->servicioCrm;
 
 	    $campos = DB::select('SELECT COLUMN_NAME
                           FROM INFORMATION_SCHEMA.COLUMNS
-                          WHERE table_name ="' . $landing->db_name . '"');
-	    $arrayCampos = array();
+                          WHERE table_name ="' . $landing->db_name . '" ORDER BY COLUMN_NAME ASC');
 
 	    foreach ($campos as $campo) {
-		    $arrayCampos[$campo->COLUMN_NAME] = $campo->COLUMN_NAME;
+		    $data['campos'][$campo->COLUMN_NAME] = $campo->COLUMN_NAME;
 	    }
 
-	    return view('admin.serviciosCrmsXLandings.create')
-		    ->with('servicio', $servicio)
-		    ->with('landing_id', $landing_id)
-		    ->with('campos', $arrayCampos);
-
+	    return $data;
     }
 
     /**
@@ -76,31 +93,22 @@ class ServiciosCrmsXLandingController extends InfyOmBaseController
      */
     public function store(CreateServiciosCrmsXLandingRequest $request)
     {
-	    $camposDelete = DB::table('landings_campos_servicios as a')
-	                      ->join('campos_servicios_crms as c', 'c.id', '=', 'a.campos_servicios_crm_id')
-	                      ->where('landing_id', $request['landing_id'])
-	                      ->where('c.servicio_crm_id', $request['servicios_crm_id'])
-	                      ->select('a.id')
-	                      ->get();
+    	$landing = Landing::find($request['landing_id']);
 
-	    if (count($camposDelete) > 0) {
-		    foreach ($camposDelete as $item) {
-			    DB::table('landings_campos_servicios')
-			      ->where('id', $item->id)
-			      ->delete();
-		    }
+	    // Se eliminan los campos y los servicios actuales
+	    foreach ( $landing->landingsCamposServicios as $campo ) {
+			$campo->delete();
 	    }
 
-//	    $servicioCrmXLanding = DB::table('servicios_crms_x_landings')
-//	                                ->where('landing_id', $request['landing_id'])
-//	                                ->where('servicios_crm_id', $request['servicios_crm_id'])
-//	                                ->delete();
+	    foreach ( $landing->serviciosCrmsXLandings as $servicioXLanding ) {
+			$servicioXLanding->delete();
+	    }
 
 	    if (!isset($request['eliminar'])) {
 
 		    $request['estado'] = true;
 		    $input = $request->all();
-//		    $servicioCrmXLanding = $this->serviciosCrmsXLandingRepository->create($input);
+		    $servicioCrmXLanding = $this->serviciosCrmsXLandingRepository->create($input);
 
 		    $campos = CampoServicioCrm::where('servicio_crm_id', $request['servicios_crm_id'])->get();
 

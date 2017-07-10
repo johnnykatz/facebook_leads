@@ -215,6 +215,7 @@ Route::patch('admin/serviciosCrmsXLandings/{serviciosCrmsXLandings}', ['as'=> 'a
 Route::delete('admin/serviciosCrmsXLandings/{serviciosCrmsXLandings}', ['as'=> 'admin.serviciosCrmsXLandings.destroy', 'uses' => 'Admin\ServiciosCrmsXLandingController@destroy', 'middleware' => ['auth']]);
 Route::get('admin/serviciosCrmsXLandings/{serviciosCrmsXLandings}', ['as'=> 'admin.serviciosCrmsXLandings.show', 'uses' => 'Admin\ServiciosCrmsXLandingController@show', 'middleware' => ['auth']]);
 Route::get('admin/serviciosCrmsXLandings/{serviciosCrmsXLandings}/edit', ['as'=> 'admin.serviciosCrmsXLandings.edit', 'uses' => 'Admin\ServiciosCrmsXLandingController@edit', 'middleware' => ['auth']]);
+Route::get('admin/serviciosCrmsXLandings/recargar_campos/{landing_id}/{servicio_crm_id}', ['as'=> 'admin.serviciosCrmsXLandings.recargarCampos', 'uses' => 'Admin\ServiciosCrmsXLandingController@recargarCampos', 'middleware' => ['auth']]);
 
 
 Route::get('admin/serviciosCrmsXLandings', ['as'=> 'admin.serviciosCrmsXLandings.index', 'uses' => 'Admin\ServiciosCrmsXLandingController@index', 'middleware' => ['auth']]);

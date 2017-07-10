@@ -21,4 +21,13 @@
             </div>
         </div>
     </div>
+    <script type="application/javascript">
+        $(document).ready(function(){
+            $('#servicios_crm_id').on('change', function(e){var field = $(this);
+               $.get(field.data('url') + '/' + field.val(), function(response){
+                   $('#campos-servicio').html(response);
+               });
+            });
+        });
+    </script>
 @endsection

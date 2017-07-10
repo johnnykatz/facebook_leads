@@ -5,10 +5,12 @@ namespace App\Http\Controllers\Admin;
 use App\Http\Requests\Admin;
 use App\Http\Requests\Admin\CreateLandingRequest;
 use App\Http\Requests\Admin\UpdateLandingRequest;
+use App\Models\Admin\Landing;
 use App\Repositories\Admin\LandingRepository;
 use App\Http\Controllers\AppBaseController as InfyOmBaseController;
 use Illuminate\Http\Request;
 use Flash;
+use Illuminate\Support\Facades\DB;
 use Prettus\Repository\Criteria\RequestCriteria;
 use Response;
 
@@ -153,4 +155,28 @@ class LandingController extends InfyOmBaseController
 
         return redirect(route('admin.landings.index'));
     }
+
+
+	public function listarDatos($id, Request $request)
+	{
+		$landing = Landing::find($id);
+
+		$estructura = DB::select('SELECT distinct(COLUMN_NAME)
+                          FROM INFORMATION_SCHEMA.COLUMNS
+                          WHERE table_name ="' . $landing->db_name . '"');
+
+		$datos = DB::select('SELECT *
+	                          FROM ' . $landing->db_name . '
+	                          order by fecha_creacion desc');
+		$result = null;
+		foreach ($datos as $dato) {
+			$result[] = (array)$dato;
+		}
+		return view('admin.landings.index_datos')
+			->with('estructura', $estructura)
+			->with('landing', $landing)
+			->with('datos', $result);
+
+
+	}
 }

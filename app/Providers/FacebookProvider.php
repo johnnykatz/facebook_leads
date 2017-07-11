@@ -165,7 +165,7 @@ class FacebookProvider
                         $mensaje = "Hubo un error al conectarse con facebook, si continua recibiendo este mensaje en los proximos 4 minutos, comuniquese con el administrador del sistema. "
                             . "  RESPUESTA : " . $e->getMessage();;
                     }
-//                    $this->sendMail($mensaje);
+                    $this->sendMail($mensaje);
                     echo " No se pudo conectar a Facebook" . chr(10) . chr(13);
                     $leads = null;
                     exit;

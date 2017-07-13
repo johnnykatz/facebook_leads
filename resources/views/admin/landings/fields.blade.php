@@ -23,9 +23,13 @@
 
 <!-- Boolean Checkbox Activo Field checked by default -->
 <div class="form-group col-sm-2">
-    <label class="checkbox-inline">
-        {!! Form::checkbox('activo', 1, true, ['class' => 'icheckbox_minimal-blue checkbox']) !!} Activo
-        {{-- remove {, true} to make it unchecked by default --}}
+    <label for="" class="control-label">Activo</label>
+    <div class="clearfix"></div>
+    <label class="radio-inline">
+        {!! Form::radio('activo', 1, true, ['class' => 'icheckbox_minimal-blue radio']) !!} SI
+    </label>
+    <label class="radio-inline">
+        {!! Form::radio('activo', 0, false, ['class' => 'icheckbox_minimal-blue radio']) !!} NO
     </label>
 </div>
 

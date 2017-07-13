@@ -78,7 +78,7 @@ class LandingsService
 
                 $landing = $serviciosCrmsXLanding->landing;
 
-                if ($landing->con_estructura) {
+                if ($landing->con_estructura && $landing->activo) {
 
                     $campos = DB::select('SELECT COLUMN_NAME
                           FROM INFORMATION_SCHEMA.COLUMNS

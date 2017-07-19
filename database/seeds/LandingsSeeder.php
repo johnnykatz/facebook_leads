@@ -139,7 +139,13 @@ class LandingsSeeder extends Seeder
 				    'requerido' => true,
 				    'tipo'      => 'time_unix',
 				    'estado'    => 1
-			    ]
+			    ],
+                [
+                    'nombre'    => 'color',
+                    'requerido' => false,
+                    'tipo'      => 'string',
+                    'estado'    => 1
+                ]
 		    ]
 	    ];
 

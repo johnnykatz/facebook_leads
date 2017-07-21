@@ -47,8 +47,8 @@ class LandingsService
                         $table->string('landing_identificador');
                         $table->string('fecha_creacion');
                         $table->string('Nombredeformulario');
-                        $table->boolean('habeas')->default(true);
-                        $table->boolean('terminos')->default(true);
+                        $table->boolean('habeas_sistema')->default(true);
+                        $table->boolean('terminos_sistema')->default(true);
 
                         foreach ($campos as $campo) {
                             $table->string(\App\Providers\FuncionesProvider::limpiaCadena($campo));
@@ -91,10 +91,12 @@ class LandingsService
 
                     echo 'Landing -> ' . $landing->nombre . "\n";
 
-                    $url = $landing->endpoint;
+                    $url = $landing->endpoint . '?fecha=' . strtotime($landing->fecha_ultimo_registro);
                     $response = json_decode(file_get_contents($url), TRUE);
 
                     if (is_array($response['data']) && count($response['data']) > 0) {
+	                    $countData = count($response['data']);
+	                    $i = 0;
                         foreach ($response['data'] as $data) {
 
                             $landing_tmp = DB::table($landing->db_name)
@@ -129,7 +131,7 @@ class LandingsService
                             foreach (array_except($data, [$landing->landing_identificador]) as $k => $val) {
                                 if (in_array(FuncionesProvider::limpiaCadena($k), $arrayCampos)) {
                                     $fields[] = FuncionesProvider::limpiaCadena($k);
-                                    $values[] = addslashes((string)$val);
+                                    $values[] = addslashes(utf8_decode((string)$val));
                                 }
                             }
 
@@ -137,10 +139,13 @@ class LandingsService
 
                             $sql = DB::insert("insert into " . $landing->db_name . " (" . implode(',', $fields) . ")" . " values (" . $valores . ")");
 
+	                        // Guardar fecha del ultimo registro
+	                        if(++$i == $countData) {
+                                $landing->fecha_ultimo_registro = $data[$landing->campo_fecha];
+	                        }
                         }
 
                         $landing->fecha_sincronizacion = date("Y-m-d H:i:s");
-                        $landing->fecha_ultimo_registro = date("Y-m-d H:i:s");
                         $landing->save();
                     }
                 }

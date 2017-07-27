@@ -247,7 +247,6 @@ class LandingsService
                             $enviado->save();
                         } else {
                             $response = $this->sendDatos($datosAEnviar);
-
                             if ($response->resultado->estado == 1) {
                                 $enviado = new LandingsEnviadosXServicio();
                                 $enviado->landing_id = $landing->id;

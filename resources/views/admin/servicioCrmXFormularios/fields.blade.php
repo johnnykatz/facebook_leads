@@ -89,6 +89,10 @@
     {!! Form::label('terminos', 'Terminos:') !!}
     {!! Form::select('terminos',$campos,null,['class'=>'form-control','placeholder'=>'seleccione...']) !!}
 </div>
+<div class="form-group col-sm-6">
+    {!! Form::label('canal_sistema', 'Canal sistema:') !!}
+    {!! Form::select('canal_sistema',$campos,null,['class'=>'form-control','placeholder'=>'seleccione...']) !!}
+</div>
 
 <div class="form-group col-sm-12">
     {!! Form::label('eliminar', 'Eliminar sincronizacion:') !!}

@@ -46,7 +46,6 @@ class SincronizarLandings extends Command
 
 
 
-
         echo " Comienza sincronizacion de Landings con el Crm" . chr(10) . chr(13);
         $servicio = new LandingsService($this->argument('servicio'));
         $servicio->enviarDatos();

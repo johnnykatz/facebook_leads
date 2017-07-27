@@ -215,6 +215,9 @@ class FacebookProvider
                     $fields[] = 'created_time';
                     $values[] = $data['created_time'];
 
+                    $fields[] = 'canal_sistema';
+                    $values[] = 'facebook';
+
                     $fields[] = 'formulario_id';
                     $values[] = $formulario->id;
 
@@ -276,6 +279,7 @@ class FacebookProvider
                         $table->dateTime('created_time');
                         $table->string('formulario_id');
                         $table->string('formulario');
+                        $table->string('canal_sistema')->default('facebook');
                         $table->boolean('habeas')->default(true);
                         $table->boolean('terminos')->default(true);
 //                    $table->boolean('enviado_crm')->default(false);

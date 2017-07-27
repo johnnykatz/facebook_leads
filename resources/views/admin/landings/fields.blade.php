@@ -21,6 +21,12 @@
     {!! Form::text('campo_fecha', null, ['class' => 'form-control']) !!}
 </div>
 
+<!-- Canal Field -->
+<div class="form-group col-sm-6">
+    {!! Form::label('canal', 'Canal:') !!}
+    {!! Form::text('canal', null, ['class' => 'form-control']) !!}
+</div>
+
 <!-- Boolean Checkbox Activo Field checked by default -->
 <div class="form-group col-sm-2">
     <label for="" class="control-label">Activo</label>

@@ -22,6 +22,7 @@ class Landing extends Model
 	    'landing_identificador',
 	    'campo_fecha',
 	    'endpoint',
+	    'canal',
         'activo'
     ];
 

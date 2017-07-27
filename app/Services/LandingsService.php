@@ -119,6 +119,9 @@ class LandingsService
                             $fields[] = 'Nombredeformulario';
                             $values[] = $landing->nombre;
 
+                            $fields[] = 'canal_sistema';
+                            $values[] = $landing->canal;
+
                             $fields[] = 'fecha_creacion';
                             $values[] = $data[$landing->campo_fecha];
 

@@ -246,7 +246,6 @@ class LandingsService
                             $enviado->estados_envio_id = 3;
                             $enviado->save();
                         } else {
-                            dd($datosAEnviar);
                             $response = $this->sendDatos($datosAEnviar);
                             if ($response->resultado->estado == 1) {
                                 $enviado = new LandingsEnviadosXServicio();

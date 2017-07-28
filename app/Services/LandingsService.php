@@ -47,6 +47,7 @@ class LandingsService
                         $table->string('landing_identificador');
                         $table->string('fecha_creacion');
                         $table->string('Nombredeformulario');
+                        $table->string('canal_sistema');
                         $table->boolean('habeas_sistema')->default(true);
                         $table->boolean('terminos_sistema')->default(true);
 

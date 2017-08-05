@@ -84,7 +84,7 @@ Route::get('callback', 'Admin\FacebookController@callback');
 
 
 
-Route::get('admin/tokens', ['as'=> 'admin.tokens.index', 'uses' => 'Admin\TokenController@index', 'middleware' => ['auth']]);
+Route::get('admin/tokens', ['as'=> 'admin.tokens.index', 'uses' => 'Admin\TokenController@index']);
 Route::post('admin/tokens', ['as'=> 'admin.tokens.store', 'uses' => 'Admin\TokenController@store', 'middleware' => ['auth']]);
 Route::get('admin/tokens/create', ['as'=> 'admin.tokens.create', 'uses' => 'Admin\TokenController@create', 'middleware' => ['auth']]);
 Route::put('admin/tokens/{tokens}', ['as'=> 'admin.tokens.update', 'uses' => 'Admin\TokenController@update', 'middleware' => ['auth']]);
@@ -124,54 +124,54 @@ Route::get('admin/users/{users}/edit', ['as' => 'admin.users.edit', 'uses' => 'A
 
 
 
-Route::get('admin/crms', ['as'=> 'admin.crms.index', 'uses' => 'Admin\CrmController@index']);
-Route::post('admin/crms', ['as'=> 'admin.crms.store', 'uses' => 'Admin\CrmController@store']);
-Route::get('admin/crms/create', ['as'=> 'admin.crms.create', 'uses' => 'Admin\CrmController@create']);
-Route::put('admin/crms/{crms}', ['as'=> 'admin.crms.update', 'uses' => 'Admin\CrmController@update']);
-Route::patch('admin/crms/{crms}', ['as'=> 'admin.crms.update', 'uses' => 'Admin\CrmController@update']);
-Route::delete('admin/crms/{crms}', ['as'=> 'admin.crms.destroy', 'uses' => 'Admin\CrmController@destroy']);
-Route::get('admin/crms/{crms}', ['as'=> 'admin.crms.show', 'uses' => 'Admin\CrmController@show']);
-Route::get('admin/crms/{crms}/edit', ['as'=> 'admin.crms.edit', 'uses' => 'Admin\CrmController@edit']);
+Route::get('admin/crms', ['as'=> 'admin.crms.index', 'uses' => 'Admin\CrmController@index', 'middleware' => ['auth']]);
+Route::post('admin/crms', ['as'=> 'admin.crms.store', 'uses' => 'Admin\CrmController@store', 'middleware' => ['auth']]);
+Route::get('admin/crms/create', ['as'=> 'admin.crms.create', 'uses' => 'Admin\CrmController@create', 'middleware' => ['auth']]);
+Route::put('admin/crms/{crms}', ['as'=> 'admin.crms.update', 'uses' => 'Admin\CrmController@update', 'middleware' => ['auth']]);
+Route::patch('admin/crms/{crms}', ['as'=> 'admin.crms.update', 'uses' => 'Admin\CrmController@update', 'middleware' => ['auth']]);
+Route::delete('admin/crms/{crms}', ['as'=> 'admin.crms.destroy', 'uses' => 'Admin\CrmController@destroy', 'middleware' => ['auth']]);
+Route::get('admin/crms/{crms}', ['as'=> 'admin.crms.show', 'uses' => 'Admin\CrmController@show', 'middleware' => ['auth']]);
+Route::get('admin/crms/{crms}/edit', ['as'=> 'admin.crms.edit', 'uses' => 'Admin\CrmController@edit', 'middleware' => ['auth']]);
 
 
-Route::get('admin/servicioCrms', ['as'=> 'admin.servicioCrms.index', 'uses' => 'Admin\ServicioCrmController@index']);
-Route::post('admin/servicioCrms', ['as'=> 'admin.servicioCrms.store', 'uses' => 'Admin\ServicioCrmController@store']);
-Route::get('admin/servicioCrms/create', ['as'=> 'admin.servicioCrms.create', 'uses' => 'Admin\ServicioCrmController@create']);
-Route::put('admin/servicioCrms/{servicioCrms}', ['as'=> 'admin.servicioCrms.update', 'uses' => 'Admin\ServicioCrmController@update']);
-Route::patch('admin/servicioCrms/{servicioCrms}', ['as'=> 'admin.servicioCrms.update', 'uses' => 'Admin\ServicioCrmController@update']);
-Route::delete('admin/servicioCrms/{servicioCrms}', ['as'=> 'admin.servicioCrms.destroy', 'uses' => 'Admin\ServicioCrmController@destroy']);
-Route::get('admin/servicioCrms/{servicioCrms}', ['as'=> 'admin.servicioCrms.show', 'uses' => 'Admin\ServicioCrmController@show']);
-Route::get('admin/servicioCrms/{servicioCrms}/edit', ['as'=> 'admin.servicioCrms.edit', 'uses' => 'Admin\ServicioCrmController@edit']);
+Route::get('admin/servicioCrms', ['as'=> 'admin.servicioCrms.index', 'uses' => 'Admin\ServicioCrmController@index', 'middleware' => ['auth']]);
+Route::post('admin/servicioCrms', ['as'=> 'admin.servicioCrms.store', 'uses' => 'Admin\ServicioCrmController@store', 'middleware' => ['auth']]);
+Route::get('admin/servicioCrms/create', ['as'=> 'admin.servicioCrms.create', 'uses' => 'Admin\ServicioCrmController@create', 'middleware' => ['auth']]);
+Route::put('admin/servicioCrms/{servicioCrms}', ['as'=> 'admin.servicioCrms.update', 'uses' => 'Admin\ServicioCrmController@update', 'middleware' => ['auth']]);
+Route::patch('admin/servicioCrms/{servicioCrms}', ['as'=> 'admin.servicioCrms.update', 'uses' => 'Admin\ServicioCrmController@update', 'middleware' => ['auth']]);
+Route::delete('admin/servicioCrms/{servicioCrms}', ['as'=> 'admin.servicioCrms.destroy', 'uses' => 'Admin\ServicioCrmController@destroy', 'middleware' => ['auth']]);
+Route::get('admin/servicioCrms/{servicioCrms}', ['as'=> 'admin.servicioCrms.show', 'uses' => 'Admin\ServicioCrmController@show', 'middleware' => ['auth']]);
+Route::get('admin/servicioCrms/{servicioCrms}/edit', ['as'=> 'admin.servicioCrms.edit', 'uses' => 'Admin\ServicioCrmController@edit', 'middleware' => ['auth']]);
 
 
-Route::get('admin/campoServicioCrms', ['as'=> 'admin.campoServicioCrms.index', 'uses' => 'Admin\CampoServicioCrmController@index']);
-Route::post('admin/campoServicioCrms', ['as'=> 'admin.campoServicioCrms.store', 'uses' => 'Admin\CampoServicioCrmController@store']);
-Route::get('admin/campoServicioCrms/create', ['as'=> 'admin.campoServicioCrms.create', 'uses' => 'Admin\CampoServicioCrmController@create']);
-Route::put('admin/campoServicioCrms/{campoServicioCrms}', ['as'=> 'admin.campoServicioCrms.update', 'uses' => 'Admin\CampoServicioCrmController@update']);
-Route::patch('admin/campoServicioCrms/{campoServicioCrms}', ['as'=> 'admin.campoServicioCrms.update', 'uses' => 'Admin\CampoServicioCrmController@update']);
-Route::delete('admin/campoServicioCrms/{campoServicioCrms}', ['as'=> 'admin.campoServicioCrms.destroy', 'uses' => 'Admin\CampoServicioCrmController@destroy']);
-Route::get('admin/campoServicioCrms/{campoServicioCrms}', ['as'=> 'admin.campoServicioCrms.show', 'uses' => 'Admin\CampoServicioCrmController@show']);
-Route::get('admin/campoServicioCrms/{campoServicioCrms}/edit', ['as'=> 'admin.campoServicioCrms.edit', 'uses' => 'Admin\CampoServicioCrmController@edit']);
+Route::get('admin/campoServicioCrms', ['as'=> 'admin.campoServicioCrms.index', 'uses' => 'Admin\CampoServicioCrmController@index', 'middleware' => ['auth']]);
+Route::post('admin/campoServicioCrms', ['as'=> 'admin.campoServicioCrms.store', 'uses' => 'Admin\CampoServicioCrmController@store', 'middleware' => ['auth']]);
+Route::get('admin/campoServicioCrms/create', ['as'=> 'admin.campoServicioCrms.create', 'uses' => 'Admin\CampoServicioCrmController@create', 'middleware' => ['auth']]);
+Route::put('admin/campoServicioCrms/{campoServicioCrms}', ['as'=> 'admin.campoServicioCrms.update', 'uses' => 'Admin\CampoServicioCrmController@update', 'middleware' => ['auth']]);
+Route::patch('admin/campoServicioCrms/{campoServicioCrms}', ['as'=> 'admin.campoServicioCrms.update', 'uses' => 'Admin\CampoServicioCrmController@update', 'middleware' => ['auth']]);
+Route::delete('admin/campoServicioCrms/{campoServicioCrms}', ['as'=> 'admin.campoServicioCrms.destroy', 'uses' => 'Admin\CampoServicioCrmController@destroy', 'middleware' => ['auth']]);
+Route::get('admin/campoServicioCrms/{campoServicioCrms}', ['as'=> 'admin.campoServicioCrms.show', 'uses' => 'Admin\CampoServicioCrmController@show', 'middleware' => ['auth']]);
+Route::get('admin/campoServicioCrms/{campoServicioCrms}/edit', ['as'=> 'admin.campoServicioCrms.edit', 'uses' => 'Admin\CampoServicioCrmController@edit', 'middleware' => ['auth']]);
 
 
-Route::get('admin/servicioCrmXFormularios', ['as'=> 'admin.servicioCrmXFormularios.index', 'uses' => 'Admin\ServicioCrmXFormularioController@index']);
-Route::post('admin/servicioCrmXFormularios', ['as'=> 'admin.servicioCrmXFormularios.store', 'uses' => 'Admin\ServicioCrmXFormularioController@store']);
-Route::get('admin/servicioCrmXFormularios/create/{formulario_id}', ['as'=> 'admin.servicioCrmXFormularios.create', 'uses' => 'Admin\ServicioCrmXFormularioController@create']);
-Route::put('admin/servicioCrmXFormularios/{servicioCrmXFormularios}', ['as'=> 'admin.servicioCrmXFormularios.update', 'uses' => 'Admin\ServicioCrmXFormularioController@update']);
-Route::patch('admin/servicioCrmXFormularios/{servicioCrmXFormularios}', ['as'=> 'admin.servicioCrmXFormularios.update', 'uses' => 'Admin\ServicioCrmXFormularioController@update']);
-Route::delete('admin/servicioCrmXFormularios/{servicioCrmXFormularios}', ['as'=> 'admin.servicioCrmXFormularios.destroy', 'uses' => 'Admin\ServicioCrmXFormularioController@destroy']);
-Route::get('admin/servicioCrmXFormularios/{servicioCrmXFormularios}', ['as'=> 'admin.servicioCrmXFormularios.show', 'uses' => 'Admin\ServicioCrmXFormularioController@show']);
-Route::get('admin/servicioCrmXFormularios/{servicioCrmXFormularios}/edit', ['as'=> 'admin.servicioCrmXFormularios.edit', 'uses' => 'Admin\ServicioCrmXFormularioController@edit']);
+Route::get('admin/servicioCrmXFormularios', ['as'=> 'admin.servicioCrmXFormularios.index', 'uses' => 'Admin\ServicioCrmXFormularioController@index', 'middleware' => ['auth']]);
+Route::post('admin/servicioCrmXFormularios', ['as'=> 'admin.servicioCrmXFormularios.store', 'uses' => 'Admin\ServicioCrmXFormularioController@store', 'middleware' => ['auth']]);
+Route::get('admin/servicioCrmXFormularios/create/{formulario_id}', ['as'=> 'admin.servicioCrmXFormularios.create', 'uses' => 'Admin\ServicioCrmXFormularioController@create', 'middleware' => ['auth']]);
+Route::put('admin/servicioCrmXFormularios/{servicioCrmXFormularios}', ['as'=> 'admin.servicioCrmXFormularios.update', 'uses' => 'Admin\ServicioCrmXFormularioController@update', 'middleware' => ['auth']]);
+Route::patch('admin/servicioCrmXFormularios/{servicioCrmXFormularios}', ['as'=> 'admin.servicioCrmXFormularios.update', 'uses' => 'Admin\ServicioCrmXFormularioController@update', 'middleware' => ['auth']]);
+Route::delete('admin/servicioCrmXFormularios/{servicioCrmXFormularios}', ['as'=> 'admin.servicioCrmXFormularios.destroy', 'uses' => 'Admin\ServicioCrmXFormularioController@destroy', 'middleware' => ['auth']]);
+Route::get('admin/servicioCrmXFormularios/{servicioCrmXFormularios}', ['as'=> 'admin.servicioCrmXFormularios.show', 'uses' => 'Admin\ServicioCrmXFormularioController@show', 'middleware' => ['auth']]);
+Route::get('admin/servicioCrmXFormularios/{servicioCrmXFormularios}/edit', ['as'=> 'admin.servicioCrmXFormularios.edit', 'uses' => 'Admin\ServicioCrmXFormularioController@edit', 'middleware' => ['auth']]);
 
 
-Route::get('admin/asociacionCamposServicios', ['as'=> 'admin.asociacionCamposServicios.index', 'uses' => 'Admin\AsociacionCamposServiciosController@index']);
-Route::post('admin/asociacionCamposServicios', ['as'=> 'admin.asociacionCamposServicios.store', 'uses' => 'Admin\AsociacionCamposServiciosController@store']);
-Route::get('admin/asociacionCamposServicios/create', ['as'=> 'admin.asociacionCamposServicios.create', 'uses' => 'Admin\AsociacionCamposServiciosController@create']);
-Route::put('admin/asociacionCamposServicios/{asociacionCamposServicios}', ['as'=> 'admin.asociacionCamposServicios.update', 'uses' => 'Admin\AsociacionCamposServiciosController@update']);
-Route::patch('admin/asociacionCamposServicios/{asociacionCamposServicios}', ['as'=> 'admin.asociacionCamposServicios.update', 'uses' => 'Admin\AsociacionCamposServiciosController@update']);
-Route::delete('admin/asociacionCamposServicios/{asociacionCamposServicios}', ['as'=> 'admin.asociacionCamposServicios.destroy', 'uses' => 'Admin\AsociacionCamposServiciosController@destroy']);
-Route::get('admin/asociacionCamposServicios/{asociacionCamposServicios}', ['as'=> 'admin.asociacionCamposServicios.show', 'uses' => 'Admin\AsociacionCamposServiciosController@show']);
-Route::get('admin/asociacionCamposServicios/{asociacionCamposServicios}/edit', ['as'=> 'admin.asociacionCamposServicios.edit', 'uses' => 'Admin\AsociacionCamposServiciosController@edit']);
+Route::get('admin/asociacionCamposServicios', ['as'=> 'admin.asociacionCamposServicios.index', 'uses' => 'Admin\AsociacionCamposServiciosController@index', 'middleware' => ['auth']]);
+Route::post('admin/asociacionCamposServicios', ['as'=> 'admin.asociacionCamposServicios.store', 'uses' => 'Admin\AsociacionCamposServiciosController@store', 'middleware' => ['auth']]);
+Route::get('admin/asociacionCamposServicios/create', ['as'=> 'admin.asociacionCamposServicios.create', 'uses' => 'Admin\AsociacionCamposServiciosController@create', 'middleware' => ['auth']]);
+Route::put('admin/asociacionCamposServicios/{asociacionCamposServicios}', ['as'=> 'admin.asociacionCamposServicios.update', 'uses' => 'Admin\AsociacionCamposServiciosController@update', 'middleware' => ['auth']]);
+Route::patch('admin/asociacionCamposServicios/{asociacionCamposServicios}', ['as'=> 'admin.asociacionCamposServicios.update', 'uses' => 'Admin\AsociacionCamposServiciosController@update', 'middleware' => ['auth']]);
+Route::delete('admin/asociacionCamposServicios/{asociacionCamposServicios}', ['as'=> 'admin.asociacionCamposServicios.destroy', 'uses' => 'Admin\AsociacionCamposServiciosController@destroy', 'middleware' => ['auth']]);
+Route::get('admin/asociacionCamposServicios/{asociacionCamposServicios}', ['as'=> 'admin.asociacionCamposServicios.show', 'uses' => 'Admin\AsociacionCamposServiciosController@show', 'middleware' => ['auth']]);
+Route::get('admin/asociacionCamposServicios/{asociacionCamposServicios}/edit', ['as'=> 'admin.asociacionCamposServicios.edit', 'uses' => 'Admin\AsociacionCamposServiciosController@edit', 'middleware' => ['auth']]);
 
 //
 //
@@ -185,14 +185,14 @@ Route::get('admin/asociacionCamposServicios/{asociacionCamposServicios}/edit', [
 //Route::get('admin/formularioEnviadoXServicios/{formularioEnviadoXServicios}/edit', ['as'=> 'admin.formularioEnviadoXServicios.edit', 'uses' => 'Admin\FormularioEnviadoXServicioController@edit']);
 
 
-Route::get('admin/estadoEnvios', ['as'=> 'admin.estadoEnvios.index', 'uses' => 'Admin\EstadoEnvioController@index']);
-Route::post('admin/estadoEnvios', ['as'=> 'admin.estadoEnvios.store', 'uses' => 'Admin\EstadoEnvioController@store']);
-Route::get('admin/estadoEnvios/create', ['as'=> 'admin.estadoEnvios.create', 'uses' => 'Admin\EstadoEnvioController@create']);
-Route::put('admin/estadoEnvios/{estadoEnvios}', ['as'=> 'admin.estadoEnvios.update', 'uses' => 'Admin\EstadoEnvioController@update']);
-Route::patch('admin/estadoEnvios/{estadoEnvios}', ['as'=> 'admin.estadoEnvios.update', 'uses' => 'Admin\EstadoEnvioController@update']);
-Route::delete('admin/estadoEnvios/{estadoEnvios}', ['as'=> 'admin.estadoEnvios.destroy', 'uses' => 'Admin\EstadoEnvioController@destroy']);
-Route::get('admin/estadoEnvios/{estadoEnvios}', ['as'=> 'admin.estadoEnvios.show', 'uses' => 'Admin\EstadoEnvioController@show']);
-Route::get('admin/estadoEnvios/{estadoEnvios}/edit', ['as'=> 'admin.estadoEnvios.edit', 'uses' => 'Admin\EstadoEnvioController@edit']);
+Route::get('admin/estadoEnvios', ['as'=> 'admin.estadoEnvios.index', 'uses' => 'Admin\EstadoEnvioController@index', 'middleware' => ['auth']]);
+Route::post('admin/estadoEnvios', ['as'=> 'admin.estadoEnvios.store', 'uses' => 'Admin\EstadoEnvioController@store', 'middleware' => ['auth']]);
+Route::get('admin/estadoEnvios/create', ['as'=> 'admin.estadoEnvios.create', 'uses' => 'Admin\EstadoEnvioController@create', 'middleware' => ['auth']]);
+Route::put('admin/estadoEnvios/{estadoEnvios}', ['as'=> 'admin.estadoEnvios.update', 'uses' => 'Admin\EstadoEnvioController@update', 'middleware' => ['auth']]);
+Route::patch('admin/estadoEnvios/{estadoEnvios}', ['as'=> 'admin.estadoEnvios.update', 'uses' => 'Admin\EstadoEnvioController@update', 'middleware' => ['auth']]);
+Route::delete('admin/estadoEnvios/{estadoEnvios}', ['as'=> 'admin.estadoEnvios.destroy', 'uses' => 'Admin\EstadoEnvioController@destroy', 'middleware' => ['auth']]);
+Route::get('admin/estadoEnvios/{estadoEnvios}', ['as'=> 'admin.estadoEnvios.show', 'uses' => 'Admin\EstadoEnvioController@show', 'middleware' => ['auth']]);
+Route::get('admin/estadoEnvios/{estadoEnvios}/edit', ['as'=> 'admin.estadoEnvios.edit', 'uses' => 'Admin\EstadoEnvioController@edit', 'middleware' => ['auth']]);
 
 
 Route::get('admin/landings', ['as'=> 'admin.landings.index', 'uses' => 'Admin\LandingController@index', 'middleware' => ['auth']]);

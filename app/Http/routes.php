@@ -84,7 +84,7 @@ Route::get('callback', 'Admin\FacebookController@callback');
 
 
 
-Route::get('admin/tokens', ['as'=> 'admin.tokens.index', 'uses' => 'Admin\TokenController@index']);
+Route::get('admin/tokens', ['as'=> 'admin.tokens.index', 'uses' => 'Admin\TokenController@index', 'middleware' => ['auth']]);
 Route::post('admin/tokens', ['as'=> 'admin.tokens.store', 'uses' => 'Admin\TokenController@store', 'middleware' => ['auth']]);
 Route::get('admin/tokens/create', ['as'=> 'admin.tokens.create', 'uses' => 'Admin\TokenController@create', 'middleware' => ['auth']]);
 Route::put('admin/tokens/{tokens}', ['as'=> 'admin.tokens.update', 'uses' => 'Admin\TokenController@update', 'middleware' => ['auth']]);

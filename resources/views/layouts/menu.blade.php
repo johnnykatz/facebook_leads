@@ -6,9 +6,13 @@
     <a href="{!! route('admin.formularios.index') !!}"><i class="fa fa-edit"></i><span>Formularios</span></a>
 </li>
 
-<li class="{{ Request::is('admin/users*') ? 'active' : '' }}">
-    <a href="{!! route('admin.users.index') !!}"><i class="fa fa-users"></i><span>Usuarios</span></a>
+<li class="{{ Request::is('landings*') ? 'active' : '' }}">
+    <a href="{!! route('admin.landings.index') !!}"><i class="fa fa-edit"></i><span>Landings</span></a>
 </li>
+
+{{--<li class="{{ Request::is('admin/users*') ? 'active' : '' }}">--}}
+    {{--<a href="{!! route('admin.users.index') !!}"><i class="fa fa-users"></i><span>Usuarios</span></a>--}}
+{{--</li>--}}
 <li class="{{ Request::is('crms*') ? 'active' : '' }}">
     <a href="{!! route('admin.crms.index') !!}"><i class="fa fa-edit"></i><span>Crms</span></a>
 </li>
@@ -42,24 +46,22 @@
     <a href="{!! route('admin.estadoEnvios.index') !!}"><i class="fa fa-edit"></i><span>EstadoEnvios</span></a>
 </li>
 
-<li class="{{ Request::is('landings*') ? 'active' : '' }}">
-    <a href="{!! route('admin.landings.index') !!}"><i class="fa fa-edit"></i><span>Landings</span></a>
-</li>
-<li class="{{ Request::is('serviciosCrmsXLandings*') ? 'active' : '' }}">
-    <a href="{!! route('admin.serviciosCrmsXLandings.index') !!}"><i
-                class="fa fa-edit"></i><span>ServiciosCrmsXLandings</span></a>
-</li>
 
-<li class="{{ Request::is('serviciosCrmsXLandings*') ? 'active' : '' }}">
-    <a href="{!! route('admin.serviciosCrmsXLandings.index') !!}"><i
-                class="fa fa-edit"></i><span>ServiciosCrmsXLandings</span></a>
-</li>
+{{--<li class="{{ Request::is('serviciosCrmsXLandings*') ? 'active' : '' }}">--}}
+    {{--<a href="{!! route('admin.serviciosCrmsXLandings.index') !!}"><i--}}
+                {{--class="fa fa-edit"></i><span>ServiciosCrmsXLandings</span></a>--}}
+{{--</li>--}}
 
-<li class="{{ Request::is('landingsCamposServicios*') ? 'active' : '' }}">
-    <a href="{!! route('admin.landingsCamposServicios.index') !!}"><i class="fa fa-edit"></i><span>LandingsCamposServicios</span></a>
-</li>
+{{--<li class="{{ Request::is('serviciosCrmsXLandings*') ? 'active' : '' }}">--}}
+    {{--<a href="{!! route('admin.serviciosCrmsXLandings.index') !!}"><i--}}
+                {{--class="fa fa-edit"></i><span>ServiciosCrmsXLandings</span></a>--}}
+{{--</li>--}}
 
-<li class="{{ Request::is('landingsEnviadosXServicios*') ? 'active' : '' }}">
-    <a href="{!! route('admin.landingsEnviadosXServicios.index') !!}"><i class="fa fa-edit"></i><span>LandingsEnviadosXServicios</span></a>
-</li>
+{{--<li class="{{ Request::is('landingsCamposServicios*') ? 'active' : '' }}">--}}
+    {{--<a href="{!! route('admin.landingsCamposServicios.index') !!}"><i class="fa fa-edit"></i><span>LandingsCamposServicios</span></a>--}}
+{{--</li>--}}
+
+{{--<li class="{{ Request::is('landingsEnviadosXServicios*') ? 'active' : '' }}">--}}
+    {{--<a href="{!! route('admin.landingsEnviadosXServicios.index') !!}"><i class="fa fa-edit"></i><span>LandingsEnviadosXServicios</span></a>--}}
+{{--</li>--}}
 

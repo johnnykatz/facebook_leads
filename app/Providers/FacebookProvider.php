@@ -213,7 +213,8 @@ class FacebookProvider
                     $values[] = date("Y-m-d H:i:s");
 
                     $fields[] = 'created_time';
-                    $values[] = $data['created_time'];
+                    $values[] = date("Y-m-d H:i:s",strtotime($data['created_time']));
+
 
                     $fields[] = 'canal_sistema';
                     $values[] = 'facebook';

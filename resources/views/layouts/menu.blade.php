@@ -26,13 +26,13 @@
                 class="fa fa-edit"></i><span>CampoServicioCrms</span></a>
 </li>
 
-<li class="{{ Request::is('servicioCrmXFormularios*') ? 'active' : '' }}">
-    <a href="{!! route('admin.servicioCrmXFormularios.index') !!}"><i class="fa fa-edit"></i><span>ServicioCrmXFormularios</span></a>
-</li>
+{{--<li class="{{ Request::is('servicioCrmXFormularios*') ? 'active' : '' }}">--}}
+    {{--<a href="{!! route('admin.servicioCrmXFormularios.index') !!}"><i class="fa fa-edit"></i><span>ServicioCrmXFormularios</span></a>--}}
+{{--</li>--}}
 
-<li class="{{ Request::is('asociacionCamposServicios*') ? 'active' : '' }}">
-    <a href="{!! route('admin.asociacionCamposServicios.index') !!}"><i class="fa fa-edit"></i><span>AsociacionCamposServicios</span></a>
-</li>
+{{--<li class="{{ Request::is('asociacionCamposServicios*') ? 'active' : '' }}">--}}
+    {{--<a href="{!! route('admin.asociacionCamposServicios.index') !!}"><i class="fa fa-edit"></i><span>AsociacionCamposServicios</span></a>--}}
+{{--</li>--}}
 
 {{--<li class="{{ Request::is('formularioEnviadoXservicios*') ? 'active' : '' }}">--}}
 {{--<a href="{!! route('admin.formularioEnviadoXservicios.index') !!}"><i class="fa fa-edit"></i><span>formularioEnviadoXservicios</span></a>--}}
@@ -42,9 +42,9 @@
 {{--<a href="{!! route('admin.formularioEnviadoXServicios.index') !!}"><i class="fa fa-edit"></i><span>FormularioEnviadoXServicios</span></a>--}}
 {{--</li>--}}
 
-<li class="{{ Request::is('estadoEnvios*') ? 'active' : '' }}">
-    <a href="{!! route('admin.estadoEnvios.index') !!}"><i class="fa fa-edit"></i><span>EstadoEnvios</span></a>
-</li>
+{{--<li class="{{ Request::is('estadoEnvios*') ? 'active' : '' }}">--}}
+    {{--<a href="{!! route('admin.estadoEnvios.index') !!}"><i class="fa fa-edit"></i><span>EstadoEnvios</span></a>--}}
+{{--</li>--}}
 
 
 {{--<li class="{{ Request::is('serviciosCrmsXLandings*') ? 'active' : '' }}">--}}

@@ -190,7 +190,7 @@ class ReporteController extends Controller
             if (isset($request['landing']) & count($request['landing']) > 0) {
                 $datos = array();
                 foreach ($request['landing'] as $land) {
-                    $landing = Formulario::find($land);
+                    $landing = Landing::find($land);
                     if ($landing) {
                         $cantidad = DB::select('SELECT count(id) as cantidad
                           FROM ' . $landing->db_name .

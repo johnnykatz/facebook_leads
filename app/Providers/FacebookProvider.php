@@ -213,7 +213,7 @@ class FacebookProvider
                     $values[] = date("Y-m-d H:i:s");
 
                     $fields[] = 'created_time';
-                    $values[] = date("Y-m-d H:i:s",strtotime($data['created_time']));
+                    $values[] = date("Y-m-d H:i:s", strtotime($data['created_time']));
 
 
                     $fields[] = 'canal_sistema';
@@ -306,10 +306,13 @@ class FacebookProvider
 
     private function sendMail($mensaje)
     {
-        Mail::raw($mensaje, function ($message) {
-            $message->from('johnnykatzg@gmail.com', "Error en Sistema");
+        $emails = explode(",", env("MAILS_NOTIFICACIONES"));
+        Mail::raw($mensaje, function ($message) use ($emails) {
+            $message->from(env("MAIL_FROM_ADDRESS"), "URGENTE - WEBSERVICE");
             $message->subject('Error en Sistema');
-            $message->to('johnnykatzg@gmail.com');
+            foreach ($emails as $email) {
+                $message->to($email);
+            }
         });
     }
 

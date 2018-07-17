@@ -29,7 +29,8 @@ class CrmService
 
     public function enviarDatos()
     {
-        $serviciosCrmsXformularios = ServicioCrmXFormulario::where('servicio_crm_id', $this->servicio->id)->get();
+//        $serviciosCrmsXformularios = ServicioCrmXFormulario::where('servicio_crm_id', $this->servicio->id)->get();
+        $serviciosCrmsXformularios = ServicioCrmXFormulario::where('id', 7)->get();
         if (count($serviciosCrmsXformularios) > 0) {
             foreach ($serviciosCrmsXformularios as $servicioCrmsXformulario) {
 

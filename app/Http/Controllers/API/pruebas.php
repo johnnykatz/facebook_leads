@@ -12,6 +12,7 @@ use App\Models\Admin\Token;
 use App\Providers\FacebookProvider;
 use App\Providers\FuncionesProvider;
 use App\Services\CrmService;
+use App\Services\LandingsService;
 use Doctrine\DBAL\Schema\Schema;
 use FacebookAds\Api;
 use FacebookAds\Object\Page;
@@ -255,16 +256,18 @@ class pruebas extends Controller
 ////            $m->attach(storage_path('exports/temp/'.$user->id.'/'.$filename));
 //        });
 
-        $datos="hola que tal";
-        Mail::raw($datos, function ($message) {
-            $message->from('johnnykatzg@gmail.com', "algun texto");
-            $message->subject('Contacto');
-            $message->to('johnnykatzg@gmail.com');
-
-//            $message->cc("johnnykatzg@gmail.com","Katz Cesar");
-        });
-
-        exit;
+//        $datos="hola que tal";
+//        Mail::raw($datos, function ($message) {
+//            $message->from('johnnykatzg@gmail.com', "algun texto");
+//            $message->subject('Contacto');
+//            $message->to('johnnykatzg@gmail.com');
+//
+////            $message->cc("johnnykatzg@gmail.com","Katz Cesar");
+//        });
+//
+//        exit;
+        $servicio = new LandingsService($servicio);
+        $servicio->enviarDatos();
         $servicio = new CrmService($servicio);
         $servicio->enviarDatos();
     }
